@@ -80,6 +80,30 @@ namespace BTL.Areas.Admin.Controllers
             return View(phong);
         }
         //Sua phong end!
+        //Xoa Phong begin!
+        [Route("XoaPhong")]
+        [HttpGet]
+        public IActionResult XoaPhong(string maPhong)
+        {
+            TempData["Message"] = "";
+            var DatPhongs = db.DatPhongs.Where(x => x.MaPhong == maPhong).ToList();
+            if (DatPhongs.Count > 0)
+            {
+                TempData["Message"] = "Không thể xóa được phòng này";
+                return RedirectToAction("PhongKS", "HomeAdmin");
+            }
+            var CTTB = db.SuDungThietBis.Where(x => x.MaPhong == maPhong).AsEnumerable();
+            if (CTTB.Any())
+            {
+                string sql = "DELETE FROM SuDungThietBi WHERE MaPhong = {0}";
+                db.Database.ExecuteSqlRaw(sql, maPhong);
+            }
+            db.Remove(db.Phongs.Find(maPhong));
+            db.SaveChanges();
+            TempData["Message"] = "Phòng đã được xóa";
+            return RedirectToAction("PhongKS", "HomeAdmin");
+        }
+        //Xoa phong end!
         //them sua xoa phong end!
     }
 }
