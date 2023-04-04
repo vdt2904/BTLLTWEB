@@ -54,12 +54,32 @@ namespace BTL.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("PhongKS");
             }
-
- 
             return View(phong);
-
         }
         //them phong end!
+        //Sua phong begin!
+        [Route("SuaPhong")]
+        [HttpGet]
+        public IActionResult SuaPhong(string maphong)
+        {
+            ViewBag.MaLp = new SelectList(db.LoaiPhongs.ToList(), "MaLp", "LoaiPhong1");
+            var phong = db.Phongs.Find(maphong);
+            return View();
+        }
+        [Route("SuaPhong")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaPhong(Phong phong)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(phong).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("PhongKS","HomeAdmin");
+            }
+            return View(phong);
+        }
+        //Sua phong end!
         //them sua xoa phong end!
     }
 }
