@@ -11,7 +11,7 @@ public partial class NhanVien
 
     public string? GioiTinh { get; set; }
 
-    public string Cccd { get; set; } = null!;
+    public string? Cccd { get; set; }
 
     public DateTime? NgaySinh { get; set; }
 
