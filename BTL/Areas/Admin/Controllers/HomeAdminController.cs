@@ -5,9 +5,16 @@ using X.PagedList;
 
 namespace BTL.Areas.Admin.Controllers
 {
-
+	[Area("admin")]
+	[Route("admin")]
+	[Route("admin/homeadmin")]
 	public class HomeAdminController : Controller
 	{
+		
+		QL db = new QlkhachSanAspContext();
+		[Route("")]
+		[Route("index")]
+
 
 
 		public IActionResult Index()
