@@ -1,0 +1,68 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using BTL.Models;
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<LoaiPhong>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "LoaiPhong";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>LoaiPhong</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Loại phòng
+            </th>
+            <th>
+                Số người tối đa
+            </th>
+            <th>
+                Giá
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@{
+    int i = 0;
+    string @cls = "table-success";
+}
+@foreach (var item in Model) {
+    i++;
+    cls = "table-success";
+    if (i % 2 == 0)
+    {
+        cls = "table-primary";
+    }
+        <tr class="@cls">
+            <td>
+                @Html.DisplayFor(modelItem => item.LoaiPhong1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoNguoiToiDa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gia)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaLp">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaLp">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaLp">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@Html.PagedListPager(Model,page=>Url.Action("LoaiPhong",new {page=page}),new
+    X.PagedList.Web.Common.PagedListRenderOptions(){
+        LiElementClasses = new List<String> {"page-item"},
+        PageClasses = new List<String> {"page-link"}
+    }
+)

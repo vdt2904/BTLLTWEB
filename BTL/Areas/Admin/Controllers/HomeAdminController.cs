@@ -105,5 +105,18 @@ namespace BTL.Areas.Admin.Controllers
         }
         //Xoa phong end!
         //them sua xoa phong end!
+        //them sua xoa loaiphong begin!
+        //hien thi loaiphong begin!
+        [Route("LoaiPhong")]
+        public IActionResult LoaiPhong(int? page)
+        {
+            int pageSize = 15;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstloaiphong = db.LoaiPhongs.AsNoTracking().OrderBy(x => x.LoaiPhong1);
+            PagedList<LoaiPhong> lst = new PagedList<LoaiPhong>(lstloaiphong, pageNumber, pageSize);
+            return View(lst);
+        }
+        //hien thi loaiphong end!
+        //them sua xoa loaiphong end!
     }
 }
