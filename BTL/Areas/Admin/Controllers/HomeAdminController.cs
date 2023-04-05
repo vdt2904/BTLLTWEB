@@ -117,6 +117,29 @@ namespace BTL.Areas.Admin.Controllers
             return View(lst);
         }
         //hien thi loaiphong end!
+        //Sua loai phong begin!
+        [Route("SuaLoaiPhong")]
+        [HttpGet]
+        public IActionResult SuaLoaiPhong(string malp)
+        {
+//            ViewBag.MaLp = new SelectList(db.LoaiPhongs.ToList(), "MaLp", "LoaiPhong1");
+            var loaiphong = db.LoaiPhongs.Find(malp);
+            return View();
+        }
+        [Route("SuaLoaiPhong")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaLoaiPhong(LoaiPhong Loaiphong)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(Loaiphong).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("LoaiPhong", "HomeAdmin");
+            }
+            return View(Loaiphong);
+        }
+        //sua loai phong end!
         //them sua xoa loaiphong end!
     }
 }
