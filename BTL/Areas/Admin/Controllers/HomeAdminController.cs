@@ -141,5 +141,80 @@ namespace BTL.Areas.Admin.Controllers
         }
         //sua loai phong end!
         //them sua xoa loaiphong end!
+        [Route("nhanvien")]
+        public IActionResult NhanVien(int? page)
+        {
+            int pageSize = 15;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstnhanvien = db.NhanViens.AsNoTracking().OrderBy(x => x.TenNv);
+            PagedList<NhanVien> lst = new PagedList<NhanVien>(lstnhanvien, pageNumber, pageSize);
+            return View(lst);
+        }
+
+        //Thêm nhân viên
+        [Route("ThemNhanvien")]
+        [HttpGet]
+        public IActionResult ThemNhanVien()
+        {
+            return View();
+        }
+        [Route("ThemNhanVien")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemNhanVien(NhanVien nhanvien)
+        {
+            if (ModelState.IsValid)
+            {
+                db.NhanViens.Add(nhanvien);
+                db.SaveChanges();
+                return RedirectToAction("NhanVien");
+            }
+            return View(nhanvien);
+        }
+
+        // Sửa nhân viên
+        [Route("SuaNhanVien")]
+        [HttpGet]
+        public IActionResult SuaNhanVien(String manv)
+        {
+            var nhanvien = db.NhanViens.Find(manv);
+            return View(nhanvien);
+        }
+
+        [Route("SuaNhanVien")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaNhanVien(NhanVien nhanvien)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Update(nhanvien);
+                db.SaveChanges();
+                return RedirectToAction("NhanVien", "HomeAdmin");
+            }
+            return View(nhanvien);
+        }
+
+        //Xóa nhân viên
+        [Route("XoaNhanVien")]
+        [HttpGet]
+        public IActionResult XoaNhanVien(String manv)
+        {
+            TempData["Message"] = "";
+            var nhanvien = db.HoaDons.Where(x => x.MaNv == manv).ToList();
+            if (nhanvien.Count() > 0)
+            {
+                TempData["Message"] = "Không xóa được nhân viên này";
+                return RedirectToAction("NhanVien", "Admin");
+            }
+            var nhanvien1 = db.Logins.Where(x => x.MaNv == manv);
+            if (nhanvien1.Any()) db.RemoveRange(nhanvien1);
+            var nhanvien2 = db.Blogs.Where(x => x.MaNv == manv);
+            if (nhanvien2.Any()) db.RemoveRange(nhanvien2);
+            db.Remove(db.NhanViens.Find(manv));
+            db.SaveChanges();
+            TempData["Message"] = "Nhân viên đã được xóa";
+            return RedirectToAction("NhanVien", "Admin");
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BTL.Models;
 
@@ -24,4 +25,6 @@ public partial class NhanVien
     public string? Anh { get; set; }
 
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
+    [NotMapped]
+    public virtual Login? Login { get; set; }
 }
