@@ -117,7 +117,7 @@ namespace BTL.Areas.Admin.Controllers
             return View(lst);
         }
         //hien thi loaiphong end!
-        //them phong begin!
+        //them loai phong begin!
         [Route("ThemLoaiPhong")]
         [HttpGet]
         public IActionResult ThemLoaiPhong()
@@ -137,7 +137,7 @@ namespace BTL.Areas.Admin.Controllers
             }
             return View(loaiphong);
         }
-        //them phong end!
+        //them loai phong end!
         //Sua loai phong begin!
         [Route("SuaLoaiPhong")]
         [HttpGet]
@@ -160,7 +160,7 @@ namespace BTL.Areas.Admin.Controllers
             return View(Loaiphong);
         }
         //sua loai phong end!
-        //Xoa Phong begin!
+        //Xoa loai Phong begin!
         [Route("XoaLoaiPhong")]
         [HttpGet]
         public IActionResult XoaLoaiPhong(string maLp)
@@ -177,7 +177,81 @@ namespace BTL.Areas.Admin.Controllers
             TempData["Message"] = "Loại Phòng đã được xóa";
             return RedirectToAction("LoaiPhong", "HomeAdmin");
         }
-        //Xoa phong end!
+        //Xoa loai phong end!
         //them sua xoa loaiphong end!
+        // them sua xoa thietbi begin!
+        //hien thi ThietBi begin!
+        [Route("ThietBi")]
+        public IActionResult ThietBi(int? page)
+        {
+            int pageSize = 15;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstthietbi = db.ThietBis.AsNoTracking().OrderBy(x => x.TenTb);
+            PagedList<ThietBi> lst = new PagedList<ThietBi>(lstthietbi, pageNumber, pageSize);
+            return View(lst);
+        }
+        //hien thi ThietBi end!
+        //them thiet bi begin!
+        [Route("ThemThietBi")]
+        [HttpGet]
+        public IActionResult ThemThietBi()
+        {
+            return View();
+        }
+        [Route("ThemThietBi")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemThietBi(ThietBi thietbi)
+        {
+            if (ModelState.IsValid)
+            {
+                db.ThietBis.Add(thietbi);
+                db.SaveChanges();
+                return RedirectToAction("ThietBi");
+            }
+            return View(thietbi);
+        }
+        //them thiet bi end!
+        //Sua thiet bi begin!
+        [Route("SuaThietBi")]
+        [HttpGet]
+        public IActionResult SuaThietBi(string maTb)
+        {
+            var thietbi = db.ThietBis.Find(maTb);
+            return View();
+        }
+        [Route("SuaThietBi")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaThietBi(ThietBi thietbi)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(thietbi).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ThietBi", "HomeAdmin");
+            }
+            return View(thietbi);
+        }
+        //sua thiet bi end!
+        //Xoa thiet bi begin!
+        [Route("XoaThietBi")]
+        [HttpGet]
+        public IActionResult XoaThietBi(string maTb)
+        {
+            TempData["Message"] = "";
+            var sdthietBis = db.SuDungThietBis.Where(x => x.MaTb == maTb).ToList();
+            if (sdthietBis.Count > 0)
+            {
+                TempData["Message"] = "Không thể xóa được loại phòng này";
+                return RedirectToAction("ThietBi", "HomeAdmin");
+            }
+            db.Remove(db.ThietBis.Find(maTb));
+            db.SaveChanges();
+            TempData["Message"] = "Loại Phòng đã được xóa";
+            return RedirectToAction("ThietBi", "HomeAdmin");
+        }
+        //Xoa thiet bi end!
+        // them sua xoa thietbi end!
     }
 }
