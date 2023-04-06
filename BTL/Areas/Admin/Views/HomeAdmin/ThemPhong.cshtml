@@ -17,6 +17,7 @@
                 <label asp-for="MaPhong" class="control-label"></label>
                 <input asp-for="MaPhong" class="form-control" />
                 <span asp-validation-for="MaPhong" class="text-danger"></span>
+                <p style="color:red">@TempData["Message"]</p>
             </div>
             <div class="form-group">
                 <label asp-for="TenPhong" class="control-label"></label>

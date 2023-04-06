@@ -47,8 +47,15 @@ namespace BTL.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ThemPhong(Phong phong)
         {
-			if (ModelState.IsValid)
+            TempData["Message"] = "";
+            if (ModelState.IsValid)
 			{
+                TempData["Message"] = "Mã phòng đã có";
+                var sphong = db.Phongs.Where(x => x.MaPhong == phong.MaPhong).FirstOrDefault();
+                if(sphong != null)
+                {
+                    return View(phong);
+                }
                 db.Phongs.Add(phong);
                 db.SaveChanges();
                 return RedirectToAction("PhongKS");
