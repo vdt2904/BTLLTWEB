@@ -1,0 +1,51 @@
+﻿@model BTL.Models.LoaiPhong
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ThemLoaiPhong";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>ThemLoaiPhong</h1>
+
+<h4>LoaiPhong</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="ThemLoaiPhong">
+
+            <div class="form-group">
+                <label asp-for="MaLp" class="control-label"></label>
+                <input asp-for="MaLp" class="form-control" />
+                <span asp-validation-for="MaLp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoaiPhong1" class="control-label"></label>
+                <input asp-for="LoaiPhong1" class="form-control" />
+                <span asp-validation-for="LoaiPhong1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoNguoiToiDa" class="control-label"></label>
+                <input asp-for="SoNguoiToiDa" class="form-control" />
+                <span asp-validation-for="SoNguoiToiDa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gia" class="control-label"></label>
+                <input asp-for="Gia" class="form-control" />
+                <span asp-validation-for="Gia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Anh" class="control-label"></label>
+                <input asp-for="Anh" class="form-control" />
+                <span asp-validation-for="Anh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
