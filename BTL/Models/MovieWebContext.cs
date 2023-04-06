@@ -47,21 +47,23 @@ public partial class MovieWebContext : DbContext
     {
         modelBuilder.Entity<Blog>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Blog");
+            entity.HasKey(e => e.Idblog);
 
+            entity.ToTable("Blog");
+
+            entity.Property(e => e.Idblog)
+                .HasMaxLength(10)
+                .HasColumnName("IDblog");
             entity.Property(e => e.Anh).HasMaxLength(50);
             entity.Property(e => e.MaNv)
                 .HasMaxLength(10)
                 .HasColumnName("MaNV");
             entity.Property(e => e.NgayDang).HasColumnType("date");
-            entity.Property(e => e.ThongTin).HasMaxLength(1000);
+            entity.Property(e => e.ThongTin).HasColumnType("text");
             entity.Property(e => e.TieuDe).HasMaxLength(100);
 
-            entity.HasOne(d => d.MaNvNavigation).WithMany()
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.Blogs)
                 .HasForeignKey(d => d.MaNv)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Blog_NhanVien");
         });
 

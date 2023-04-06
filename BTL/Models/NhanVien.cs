@@ -23,6 +23,8 @@ public partial class NhanVien
     public string? ChucVu { get; set; }
 
     public string? Anh { get; set; }
+    [NotMapped]
+    public virtual ICollection<Blog> Blogs { get; } = new List<Blog>();
 
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
     [NotMapped]

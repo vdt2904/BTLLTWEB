@@ -2,7 +2,7 @@
 @using BTL.Models;
 @using X.PagedList.Mvc.Core;
 @model X.PagedList.IPagedList<LoaiPhong>
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
     ViewData["Title"] = "LoaiPhong";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -11,7 +11,7 @@
 <h1>LoaiPhong</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="ThemLoaiPhong">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -53,7 +53,7 @@
             <td>
                 <a asp-action="SuaLoaiPhong" asp-route-malp="@item.MaLp">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.MaLp">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaLp">Delete</a>
+                <a asp-action="XoaLoaiPhong" asp-route-maLp="@item.MaLp">Delete</a>
             </td>
         </tr>
 }
