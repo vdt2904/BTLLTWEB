@@ -23,5 +23,9 @@ public partial class NhanVien
 
     public string? Anh { get; set; }
 
+    public virtual ICollection<Blog> Blogs { get; } = new List<Blog>();
+
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
+
+    public virtual Login? Login { get; set; }
 }

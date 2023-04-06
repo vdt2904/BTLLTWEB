@@ -5,7 +5,9 @@ namespace BTL.Models;
 
 public partial class Blog
 {
-    public string MaNv { get; set; } = null!;
+    public string Idblog { get; set; } = null!;
+
+    public string? MaNv { get; set; }
 
     public string? Anh { get; set; }
 
@@ -15,5 +17,5 @@ public partial class Blog
 
     public DateTime? NgayDang { get; set; }
 
-    public virtual NhanVien MaNvNavigation { get; set; } = null!;
+    public virtual NhanVien? MaNvNavigation { get; set; }
 }
