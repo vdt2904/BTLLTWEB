@@ -12,7 +12,6 @@ namespace BTL.Areas.Admin.Controllers
 	[Route("admin/homeadmin")]
 	public class HomeAdminController : Controller
 	{
-
 		QlkhachSanAspContext db = new QlkhachSanAspContext();
 
 		[Route("")]
@@ -253,5 +252,62 @@ namespace BTL.Areas.Admin.Controllers
         }
         //Xoa thiet bi end!
         // them sua xoa thietbi end!
+        //them sua xoa SDTB begin!
+        //hien thi SDTB begin!
+        [Route("SDTB")]
+        public IActionResult SDTB(int? page)
+        {
+            int pageSize = 15;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstSDTB = db.SuDungThietBis.AsNoTracking().OrderBy(x => x.MaPhong);
+            PagedList<SuDungThietBi> lst = new PagedList<SuDungThietBi>(lstSDTB, pageNumber, pageSize);
+            return View(lst);
+        }
+        //hien thi SDTB end!
+        //them SDTB begin!
+        [Route("ThemSDTB")]
+        [HttpGet]
+        public IActionResult ThemSDTB()
+        {
+            ViewBag.MaPhong = new SelectList(db.Phongs.ToList(), "MaPhong", "TenPhong");
+            ViewBag.MaTb = new SelectList(db.ThietBis.ToList(), "MaTb", "TenTb");
+            return View();
+        }
+        [Route("ThemSDTB")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemSDTB(SuDungThietBi sdthietbi)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingThietBi = db.SuDungThietBis.Where(tb => tb.MaTb == sdthietbi.MaTb && tb.MaPhong == sdthietbi.MaPhong).FirstOrDefault();
+                if (existingThietBi != null)
+                {
+                    existingThietBi.SoLuong += sdthietbi.SoLuong;
+                }
+                else
+                {
+                    db.SuDungThietBis.Add(sdthietbi);
+                }                
+                db.SaveChanges();
+                return RedirectToAction("SDTB");
+            }
+            return View(sdthietbi);
+        }
+        //them SDTB end!
+        //Xoa thiet bi begin!
+        [Route("XoaSDThietBi")]
+        [HttpGet]
+        public IActionResult XoaSDThietBi(string maTb,string maPhong)
+        {
+            var sdtb = db.SuDungThietBis.FirstOrDefault(x => x.MaTb == maTb && x.MaPhong == maPhong);
+            db.Remove(sdtb);
+            db.SaveChanges();
+            TempData["Message"] = "Loại Phòng đã được xóa";
+            return RedirectToAction("SDTB", "HomeAdmin");
+        }
+        //Xoa thiet bi end!
+        //them sua xoa SDTD end!
+
     }
 }
