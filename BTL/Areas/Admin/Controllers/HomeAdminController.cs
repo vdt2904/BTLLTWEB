@@ -160,6 +160,24 @@ namespace BTL.Areas.Admin.Controllers
             return View(Loaiphong);
         }
         //sua loai phong end!
+        //Xoa Phong begin!
+        [Route("XoaLoaiPhong")]
+        [HttpGet]
+        public IActionResult XoaLoaiPhong(string maLp)
+        {
+            TempData["Message"] = "";
+            var Phongs = db.Phongs.Where(x => x.MaLp == maLp).ToList();
+            if (Phongs.Count > 0)
+            {
+                TempData["Message"] = "Không thể xóa được loại phòng này";
+                return RedirectToAction("LoaiPhong", "HomeAdmin");
+            }
+            db.Remove(db.LoaiPhongs.Find(maLp));
+            db.SaveChanges();
+            TempData["Message"] = "Loại Phòng đã được xóa";
+            return RedirectToAction("LoaiPhong", "HomeAdmin");
+        }
+        //Xoa phong end!
         //them sua xoa loaiphong end!
     }
 }
