@@ -135,8 +135,15 @@ namespace BTL.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ThemLoaiPhong(LoaiPhong loaiphong)
         {
+            TempData["Message"] = "";
             if (ModelState.IsValid)
             {
+                TempData["Message"] = "Mã loai phòng đã có";
+                var sLphong = db.LoaiPhongs.Where(x => x.MaLp == loaiphong.MaLp).FirstOrDefault();
+                if (sLphong != null)
+                {
+                    return View(loaiphong);
+                }
                 db.LoaiPhongs.Add(loaiphong);
                 db.SaveChanges();
                 return RedirectToAction("LoaiPhong");
@@ -207,8 +214,15 @@ namespace BTL.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ThemNhanVien(NhanVien nhanvien)
         {
+            TempData["Message"] = "";
             if (ModelState.IsValid)
             {
+                TempData["Message"] = "Mã nhân viên đã có";
+                var snv = db.NhanViens.Where(x => x.MaNv == nhanvien.MaNv).FirstOrDefault();
+                if (snv != null)
+                {
+                    return View(nhanvien);
+                }
                 db.NhanViens.Add(nhanvien);
                 db.SaveChanges();
                 return RedirectToAction("NhanVien");
@@ -284,8 +298,15 @@ namespace BTL.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ThemThietBi(ThietBi thietbi)
         {
+            TempData["Message"] = "";
             if (ModelState.IsValid)
             {
+                TempData["Message"] = "Mã thiết bị đã có";
+                var snv = db.ThietBis.Where(x => x.MaTb == thietbi.MaTb).FirstOrDefault();
+                if (snv != null)
+                {
+                    return View(thietbi);
+                }
                 db.ThietBis.Add(thietbi);
                 db.SaveChanges();
                 return RedirectToAction("ThietBi");

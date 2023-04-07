@@ -16,6 +16,7 @@
                 <label asp-for="MaTb" class="control-label"></label>
                 <input asp-for="MaTb" class="form-control" />
                 <span asp-validation-for="MaTb" class="text-danger"></span>
+                <p style="color:red">@TempData["Message"]</p>
             </div>
             <div class="form-group">
                 <label asp-for="TenTb" class="control-label"></label>
