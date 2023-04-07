@@ -1,23 +1,28 @@
-﻿@model BTL.Models.ThietBi
+﻿@model BTL.Models.DichVu
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "SuaThietBi";
+    ViewData["Title"] = "ThemDichVu";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>SuaThietBi</h1>
+<h1>ThemDichVu</h1>
 
-<h4>ThietBi</h4>
+<h4>DichVu</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post" asp-action="SuaThietBi">
+        <form method="post" asp-action="ThemDichVu">
 
-            <input type="hidden" asp-for="MaTb" readonly />
             <div class="form-group">
-                <label asp-for="TenTb" class="control-label"></label>
-                <input asp-for="TenTb" class="form-control" />
-                <span asp-validation-for="TenTb" class="text-danger"></span>
+                <label asp-for="MaDv" class="control-label"></label>
+                <input asp-for="MaDv" class="form-control" />
+                <span asp-validation-for="MaDv" class="text-danger"></span>
+                <p style="color:red">@TempData["Message"]</p>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenDv" class="control-label"></label>
+                <input asp-for="TenDv" class="form-control" />
+                <span asp-validation-for="TenDv" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Gia" class="control-label"></label>
@@ -30,7 +35,7 @@
                 <span asp-validation-for="Anh" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

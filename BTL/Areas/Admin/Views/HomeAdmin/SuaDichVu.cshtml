@@ -1,23 +1,23 @@
-﻿@model BTL.Models.ThietBi
+﻿@model BTL.Models.DichVu
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "SuaThietBi";
+    ViewData["Title"] = "SuaDichVu";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>SuaThietBi</h1>
+<h1>SuaDichVu</h1>
 
-<h4>ThietBi</h4>
+<h4>DichVu</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post" asp-action="SuaThietBi">
+        <form method="post" asp-action="SuaDichVu">
 
-            <input type="hidden" asp-for="MaTb" readonly />
+            <input type="hidden" asp-for="MaDv" />
             <div class="form-group">
-                <label asp-for="TenTb" class="control-label"></label>
-                <input asp-for="TenTb" class="form-control" />
-                <span asp-validation-for="TenTb" class="text-danger"></span>
+                <label asp-for="TenDv" class="control-label"></label>
+                <input asp-for="TenDv" class="form-control" />
+                <span asp-validation-for="TenDv" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Gia" class="control-label"></label>

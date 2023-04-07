@@ -264,7 +264,7 @@ public partial class QlkhachSanAspContext : DbContext
                 .HasColumnName("MaTB");
             entity.Property(e => e.MaPhong).HasMaxLength(10);
             entity.Property(e => e.TinhTrang).HasMaxLength(50);
-
+            entity.Property(e => e.NgaySD).HasColumnType("date");
             entity.HasOne(d => d.MaPhongNavigation).WithMany(p => p.SuDungThietBis)
                 .HasForeignKey(d => d.MaPhong)
                 .OnDelete(DeleteBehavior.ClientSetNull)

@@ -14,7 +14,7 @@ public partial class SuDungThietBi
     public int? SoLuong { get; set; }
 
     public string? TinhTrang { get; set; }
-
+    public DateTime? NgaySD { get; set; }
     public virtual Phong? MaPhongNavigation { get; set; }
 
     public virtual ThietBi? MaTbNavigation { get; set; }

@@ -411,6 +411,87 @@ namespace BTL.Areas.Admin.Controllers
         }
         //Xoa thiet bi end!
         //them sua xoa SDTD end!
+        //them sua xoa dich vu begin!
+        //hien thi dichvu begin!
+        [Route("DichVu")]
+        public IActionResult DichVu(int? page)
+        {
+            int pageSize = 15;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstdichvu = db.DichVus.AsNoTracking().OrderBy(x => x.MaDv);
+            PagedList<DichVu> lst = new PagedList<DichVu>(lstdichvu, pageNumber, pageSize);
+            return View(lst);
+        }
+        //hien thi dichvu end!
+        //them ThemDichVu begin!
+        [Route("ThemDichVu")]
+        [HttpGet]
+        public IActionResult ThemDichVu()
+        {
+            return View();
+        }
+        [Route("ThemDichVu")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ThemDichVu(DichVu dv)
+        {
+            TempData["Message"] = "";
+            if (ModelState.IsValid)
+            {
+                TempData["Message"] = "Mã dịch vụ đã có";
+                var snv = db.DichVus.Where(x => x.MaDv == dv.MaDv).FirstOrDefault();
+                if (snv != null)
+                {
+                    return View(dv);
+                }
+                db.DichVus.Add(dv);
+                db.SaveChanges();
+                return RedirectToAction("DichVu");
+            }
+            return View(dv);
+        }
+        //them ThemDichVu end!
+        //Sua dichvu begin!
+        [Route("SuaDichVu")]
+        [HttpGet]
+        public IActionResult SuaDichVu(string maDv)
+        {
+            var dichvu = db.DichVus.Find(maDv);
+            return View();
+        }
+        [Route("SuaDichVu")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaDichVu(DichVu dichvu)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(dichvu).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("DichVu", "HomeAdmin");
+            }
+            return View(dichvu);
+        }
+        //sua dichvu end!
+        //Xoa dichvu begin!
+        [Route("XoaDichVu")]
+        [HttpGet]
+        public IActionResult XoaDichVu(string maDv)
+        {
+            TempData["Message"] = "";
+            var sdv = db.SuDungDichVus.Where(x => x.MaDv == maDv).ToList();
+            if (sdv.Count > 0)
+            {
+                TempData["Message"] = "Không thể xóa được dịch vụ này";
+                return RedirectToAction("DichVu", "HomeAdmin");
+            }
+            db.Remove(db.DichVus.Find(maDv));
+            db.SaveChanges();
+            TempData["Message"] = "Dịch vụ đã được xóa";
+            return RedirectToAction("DichVu", "HomeAdmin");
+        }
+        //Xoa dichvu end!
+        //them sua xoa dich vu end!
 
     }
 }
