@@ -9,7 +9,7 @@
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <h1>Nhân Viên</h1>
-
+<p>@TempData["Message"]</p>
 <p>
     <a asp-action="ThemNhanVien">Create New</a>
 </p>
@@ -80,7 +80,7 @@
     </tbody>
 </table>
 <div style="margin: 0 auto">
-    @Html.PagedListPager(Model,page => Url.Action("DanhMucSanPham", new {page=page, maloai = ViewBag.maloai}),new X.PagedList.Web.Common.PagedListRenderOptions(){
+    @Html.PagedListPager(Model,page => Url.Action("NhanVien", new {page=page, maloai = ViewBag.maloai}),new X.PagedList.Web.Common.PagedListRenderOptions(){
     LiElementClasses = new List<String> {"page-item"},
     PageClasses = new List<String> {"page-link"}
     })
