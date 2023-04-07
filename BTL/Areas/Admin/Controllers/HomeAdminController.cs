@@ -398,6 +398,28 @@ namespace BTL.Areas.Admin.Controllers
             return View(sdthietbi);
         }
         //them SDTB end!
+        //Sua thiet bi begin!
+        [Route("SuaSDTB")]
+        [HttpGet]
+        public IActionResult SuaSDTB(string maTb,string maPhong)
+        {
+            var thietbi = db.SuDungThietBis.FirstOrDefault(x => x.MaTb == maTb && x.MaPhong == maPhong);
+            return View();
+        }
+        [Route("SuaSDTB")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaSDTB(SuDungThietBi thietbi)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(thietbi).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("SDTB", "HomeAdmin");
+            }
+            return View(thietbi);
+        }
+        //sua thiet bi end!
         //Xoa thiet bi begin!
         [Route("XoaSDThietBi")]
         [HttpGet]
@@ -406,7 +428,6 @@ namespace BTL.Areas.Admin.Controllers
             var sdtb = db.SuDungThietBis.FirstOrDefault(x => x.MaTb == maTb && x.MaPhong == maPhong);
             db.Remove(sdtb);
             db.SaveChanges();
-            TempData["Message"] = "Loại Phòng đã được xóa";
             return RedirectToAction("SDTB", "HomeAdmin");
         }
         //Xoa thiet bi end!
