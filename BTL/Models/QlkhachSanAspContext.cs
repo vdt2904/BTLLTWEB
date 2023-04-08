@@ -19,6 +19,8 @@ public partial class QlkhachSanAspContext : DbContext
 
     public virtual DbSet<DatPhong> DatPhongs { get; set; }
 
+    public virtual DbSet<Csvc> Csvcs { get; set; }
+
     public virtual DbSet<DichVu> DichVus { get; set; }
 
     public virtual DbSet<HoaDon> HoaDons { get; set; }
@@ -41,7 +43,7 @@ public partial class QlkhachSanAspContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-QUC01RN;Initial Catalog=QLKhachSanASP;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+        => optionsBuilder.UseSqlServer("Data Source=VDT\\SQLEXPRESS;Initial Catalog=QLKhachSanASP;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Blog>(entity =>
@@ -62,6 +64,13 @@ public partial class QlkhachSanAspContext : DbContext
                 .HasForeignKey(d => d.MaNv)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Blog_NhanVien");
+        });
+
+        modelBuilder.Entity<Csvc>(entity =>
+        {
+            entity.ToTable("CSVC");
+
+            entity.Property(e => e.Id).HasColumnName("id");
         });
 
         modelBuilder.Entity<DatPhong>(entity =>
