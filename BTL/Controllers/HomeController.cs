@@ -1,4 +1,5 @@
 ﻿using BTL.Models;
+using BTL.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -16,7 +17,7 @@ namespace BTL.Controllers
 		{
 			_logger = logger;
 		}
-
+        [Authentication]
         public IActionResult Index(int? page)
         {
             int pageSize = 2;
@@ -27,7 +28,7 @@ namespace BTL.Controllers
             PagedList<LoaiPhong> lst = new PagedList<LoaiPhong>(lstLoaiPhong, pageNumber, pageSize);
             return View(lst);
         }
-
+        [Authentication]
         public IActionResult Room(int? page)
         {
             int pageSize = 3;
@@ -39,7 +40,7 @@ namespace BTL.Controllers
             PagedList<LoaiPhong> lst = new PagedList<LoaiPhong>(lstLoaiPhong, pageNumber, pageSize);
             return View(lst);
         }
-
+        [Authentication]
         public IActionResult PhongTheoLoai(string maLoai, int? page)
         {
             int pageSize = 8;
@@ -49,7 +50,7 @@ namespace BTL.Controllers
             ViewBag.maloai = maLoai;
             return View(lst);
         }
-
+        [Authentication]
         public IActionResult ChiTietPhong(string maloai)
         {
             //var room = db.LoaiPhongs.Include("TenPhong").Include("TinhTrang").ToList();
@@ -59,13 +60,13 @@ namespace BTL.Controllers
             ViewBag.anhPhong = anhPhong;
             return View(room);
         }
-
+        [Authentication]
         public IActionResult Privacy()
 		{
 			return View();
 		}
-
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [Authentication]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
