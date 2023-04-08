@@ -19,6 +19,8 @@ public partial class QlkhachSanAspContext : DbContext
 
     public virtual DbSet<DatPhong> DatPhongs { get; set; }
 
+    public virtual DbSet<Csvc> Csvcs { get; set; }
+
     public virtual DbSet<DichVu> DichVus { get; set; }
 
     public virtual DbSet<HoaDon> HoaDons { get; set; }
@@ -63,6 +65,13 @@ public partial class QlkhachSanAspContext : DbContext
                 .HasForeignKey(d => d.MaNv)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Blog_NhanVien");
+        });
+
+        modelBuilder.Entity<Csvc>(entity =>
+        {
+            entity.ToTable("CSVC");
+
+            entity.Property(e => e.Id).HasColumnName("id");
         });
 
         modelBuilder.Entity<DatPhong>(entity =>

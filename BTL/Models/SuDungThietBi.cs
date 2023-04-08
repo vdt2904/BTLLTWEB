@@ -17,7 +17,6 @@ public partial class SuDungThietBi
     [DataType(DataType.Date)]
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     public DateTime? NgaySD { get; set; }
-    public virtual Phong? MaPhongNavigation { get; set; }
-
+    public virtual Phong? MaPhongNavigation { get; set; }   
     public virtual ThietBi? MaTbNavigation { get; set; }
 }

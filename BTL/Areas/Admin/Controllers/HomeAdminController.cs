@@ -383,13 +383,29 @@ namespace BTL.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                TempData["Message"] = "";
                 var existingThietBi = db.SuDungThietBis.Where(tb => tb.MaTb == sdthietbi.MaTb && tb.MaPhong == sdthietbi.MaPhong).FirstOrDefault();
                 if (existingThietBi != null)
                 {
-                    existingThietBi.SoLuong += sdthietbi.SoLuong;
+                    ViewBag.MaPhong = new SelectList(db.Phongs.ToList(), "MaPhong", "TenPhong");
+                    ViewBag.MaTb = new SelectList(db.ThietBis.ToList(), "MaTb", "TenTb");
+                    TempData["Message"] = "Không thể thêm";
+                    return View(sdthietbi);
                 }
                 else
                 {
+                    if (sdthietbi.NgaySD != null)
+                    {
+                        DateTime date = (DateTime)sdthietbi.NgaySD;
+                        int nam = date.Year;
+                        int thang = date.Month;
+                        var csvc = db.Csvcs.FirstOrDefault(c => c.Nam == nam && c.Thang == thang);
+                        if (csvc == null)
+                        {
+                            db.Csvcs.Add(new Csvc { Nam = nam, Thang = thang, TongTien = 0 });
+                            db.SaveChanges();
+                        }
+                    }
                     db.SuDungThietBis.Add(sdthietbi);
                 }                
                 db.SaveChanges();
@@ -425,10 +441,11 @@ namespace BTL.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult XoaSDThietBi(string maTb,string maPhong)
         {
-            var sdtb = db.SuDungThietBis.FirstOrDefault(x => x.MaTb == maTb && x.MaPhong == maPhong);
-            db.Remove(sdtb);
+            string sql = "DELETE FROM SuDungThietBi WHERE MaPhong = {0} and MaTB = {1}";
+            db.Database.ExecuteSqlRaw(sql, maPhong,maTb);
             db.SaveChanges();
             return RedirectToAction("SDTB", "HomeAdmin");
+
         }
         //Xoa thiet bi end!
         //them sua xoa SDTD end!
