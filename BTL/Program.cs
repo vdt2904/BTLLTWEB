@@ -1,7 +1,17 @@
+using BTL.Models;
+using BTL.Repository;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var conenctionString = builder.Configuration.GetConnectionString("QlkhachSanAspContext");
+builder.Services.AddDbContext<QlkhachSanAspContext>(x => x.UseSqlServer(conenctionString));
+
+builder.Services.AddScoped<ILoaiPhongRepository, LoaiPhongRepository>();
+
 
 var app = builder.Build();
 
