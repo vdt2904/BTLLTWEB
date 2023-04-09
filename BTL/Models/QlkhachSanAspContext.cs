@@ -17,9 +17,9 @@ public partial class QlkhachSanAspContext : DbContext
 
     public virtual DbSet<Blog> Blogs { get; set; }
 
-    public virtual DbSet<DatPhong> DatPhongs { get; set; }
-
     public virtual DbSet<Csvc> Csvcs { get; set; }
+
+    public virtual DbSet<DatPhong> DatPhongs { get; set; }
 
     public virtual DbSet<DichVu> DichVus { get; set; }
 
@@ -44,25 +44,28 @@ public partial class QlkhachSanAspContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=VDT\\SQLEXPRESS;Initial Catalog=QLKhachSanASP;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Blog>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Blog");
+            entity.HasKey(e => e.Idblog);
 
+            entity.ToTable("Blog");
+
+            entity.Property(e => e.Idblog)
+                .HasMaxLength(10)
+                .HasColumnName("IDblog");
             entity.Property(e => e.Anh).HasMaxLength(50);
             entity.Property(e => e.MaNv)
                 .HasMaxLength(10)
                 .HasColumnName("MaNV");
             entity.Property(e => e.NgayDang).HasColumnType("date");
-            entity.Property(e => e.ThongTin).HasMaxLength(1000);
+            entity.Property(e => e.ThongTin).HasColumnType("text");
             entity.Property(e => e.TieuDe).HasMaxLength(100);
 
-            entity.HasOne(d => d.MaNvNavigation).WithMany()
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.Blogs)
                 .HasForeignKey(d => d.MaNv)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Blog_NhanVien");
         });
 
@@ -127,12 +130,10 @@ public partial class QlkhachSanAspContext : DbContext
 
             entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.HoaDons)
                 .HasForeignKey(d => d.MaKh)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_HoaDon_KhachHang");
 
             entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.HoaDons)
                 .HasForeignKey(d => d.MaNv)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_HoaDon_NhanVien");
         });
 
@@ -170,26 +171,28 @@ public partial class QlkhachSanAspContext : DbContext
                 .HasMaxLength(10)
                 .HasColumnName("MaLP");
             entity.Property(e => e.Anh).HasMaxLength(50);
+            entity.Property(e => e.KichThuoc).HasMaxLength(50);
             entity.Property(e => e.LoaiPhong1)
                 .HasMaxLength(50)
                 .HasColumnName("LoaiPhong");
+            entity.Property(e => e.ThongTin).HasMaxLength(100);
         });
 
         modelBuilder.Entity<Login>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Login");
+            entity.HasKey(e => e.Id).HasName("PK_Login_1");
 
+            entity.ToTable("Login");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.MaNv)
                 .HasMaxLength(10)
                 .HasColumnName("MaNV");
             entity.Property(e => e.Password).HasMaxLength(50);
             entity.Property(e => e.Username).HasMaxLength(50);
 
-            entity.HasOne(d => d.MaNvNavigation).WithMany()
+            entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.Logins)
                 .HasForeignKey(d => d.MaNv)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Login_NhanVien");
         });
 
@@ -234,7 +237,6 @@ public partial class QlkhachSanAspContext : DbContext
 
             entity.HasOne(d => d.MaLpNavigation).WithMany(p => p.Phongs)
                 .HasForeignKey(d => d.MaLp)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Phong_LoaiPhong");
         });
 
@@ -265,14 +267,17 @@ public partial class QlkhachSanAspContext : DbContext
         {
             entity.HasKey(e => new { e.MaTb, e.MaPhong });
 
-            entity.ToTable("SuDungThietBi");
+            entity.ToTable("SuDungThietBi", tb => tb.HasTrigger("trg_CSVC"));
 
             entity.Property(e => e.MaTb)
                 .HasMaxLength(10)
                 .HasColumnName("MaTB");
             entity.Property(e => e.MaPhong).HasMaxLength(10);
+            entity.Property(e => e.NgaySd)
+                .HasColumnType("date")
+                .HasColumnName("NgaySD");
             entity.Property(e => e.TinhTrang).HasMaxLength(50);
-            entity.Property(e => e.NgaySD).HasColumnType("date");
+
             entity.HasOne(d => d.MaPhongNavigation).WithMany(p => p.SuDungThietBis)
                 .HasForeignKey(d => d.MaPhong)
                 .OnDelete(DeleteBehavior.ClientSetNull)

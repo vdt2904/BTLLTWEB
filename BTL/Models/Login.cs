@@ -5,11 +5,13 @@ namespace BTL.Models;
 
 public partial class Login
 {
-    public string MaNv { get; set; } = null!;
+    public int Id { get; set; }
+
+    public string? MaNv { get; set; }
 
     public string? Username { get; set; }
 
     public string? Password { get; set; }
 
-    public virtual NhanVien MaNvNavigation { get; set; } = null!;
+    public virtual NhanVien? MaNvNavigation { get; set; }
 }

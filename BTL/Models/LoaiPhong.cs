@@ -19,5 +19,9 @@ public partial class LoaiPhong
     [RegularExpression(@"^.*\.(jpg|jpeg|png|gif)$", ErrorMessage = "Hãy nhập đúng file ảnh .(jpg|jpeg|png|gif) ")]
     public string? Anh { get; set; }
 
+    public string? ThongTin { get; set; }
+
+    public string? KichThuoc { get; set; }
+
     public virtual ICollection<Phong> Phongs { get; } = new List<Phong>();
 }

@@ -33,5 +33,5 @@ public partial class NhanVien
 
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
     [NotMapped]
-    public virtual Login? Login { get; set; }
+    public virtual ICollection<Login> Logins { get; } = new List<Login>();
 }
