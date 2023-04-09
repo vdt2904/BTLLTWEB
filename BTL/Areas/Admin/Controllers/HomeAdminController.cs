@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using X.PagedList;
 
@@ -60,6 +61,7 @@ namespace BTL.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("PhongKS");
             }
+            ViewBag.MaLp = new SelectList(db.LoaiPhongs.ToList(), "MaLp", "LoaiPhong1");
             return View(phong);
         }
         //them phong end!
@@ -70,7 +72,7 @@ namespace BTL.Areas.Admin.Controllers
         {
             ViewBag.MaLp = new SelectList(db.LoaiPhongs.ToList(), "MaLp", "LoaiPhong1");
             var phong = db.Phongs.Find(maphong);
-            return View();
+            return View(phong);
         }
         [Route("SuaPhong")]
         [HttpPost]
@@ -157,7 +159,7 @@ namespace BTL.Areas.Admin.Controllers
         public IActionResult SuaLoaiPhong(string malp)
         {
             var loaiphong = db.LoaiPhongs.Find(malp);
-            return View();
+            return View(loaiphong);
         }
         [Route("SuaLoaiPhong")]
         [HttpPost]
@@ -320,7 +322,7 @@ namespace BTL.Areas.Admin.Controllers
         public IActionResult SuaThietBi(string maTb)
         {
             var thietbi = db.ThietBis.Find(maTb);
-            return View();
+            return View(thietbi);
         }
         [Route("SuaThietBi")]
         [HttpPost]
@@ -345,12 +347,12 @@ namespace BTL.Areas.Admin.Controllers
             var sdthietBis = db.SuDungThietBis.Where(x => x.MaTb == maTb).ToList();
             if (sdthietBis.Count > 0)
             {
-                TempData["Message"] = "Không thể xóa được loại phòng này";
+                TempData["Message"] = "Không thể xóa được Thiet bi này";
                 return RedirectToAction("ThietBi", "HomeAdmin");
             }
             db.Remove(db.ThietBis.Find(maTb));
             db.SaveChanges();
-            TempData["Message"] = "Loại Phòng đã được xóa";
+            TempData["Message"] = "Thiet bi đã được xóa";
             return RedirectToAction("ThietBi", "HomeAdmin");
         }
         //Xoa thiet bi end!
@@ -381,6 +383,8 @@ namespace BTL.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ThemSDTB(SuDungThietBi sdthietbi)
         {
+            ViewBag.MaPhong = new SelectList(db.Phongs.ToList(), "MaPhong", "TenPhong");
+            ViewBag.MaTb = new SelectList(db.ThietBis.ToList(), "MaTb", "TenTb");
             if (ModelState.IsValid)
             {
                 TempData["Message"] = "";
@@ -420,7 +424,7 @@ namespace BTL.Areas.Admin.Controllers
         public IActionResult SuaSDTB(string maTb,string maPhong)
         {
             var thietbi = db.SuDungThietBis.FirstOrDefault(x => x.MaTb == maTb && x.MaPhong == maPhong);
-            return View();
+            return View(thietbi);
         }
         [Route("SuaSDTB")]
         [HttpPost]
@@ -429,7 +433,8 @@ namespace BTL.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(thietbi).State = EntityState.Modified;
+       //         db.Entry(thietbi).State = EntityState.Modified;
+                db.Database.ExecuteSqlInterpolated($"update sudungthietbi set soluong = {thietbi.SoLuong}, tinhtrang = {thietbi.TinhTrang} where matb = {thietbi.MaTb} and maphong = {thietbi.MaPhong} ");
                 db.SaveChanges();
                 return RedirectToAction("SDTB", "HomeAdmin");
             }
@@ -495,7 +500,7 @@ namespace BTL.Areas.Admin.Controllers
         public IActionResult SuaDichVu(string maDv)
         {
             var dichvu = db.DichVus.Find(maDv);
-            return View();
+            return View(dichvu);
         }
         [Route("SuaDichVu")]
         [HttpPost]
