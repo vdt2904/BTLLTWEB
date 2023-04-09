@@ -14,7 +14,7 @@ public partial class Phong
     public string? TinhTrang { get; set; }
     [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Không được để trống")]
     public string? MaLp { get; set; }
-
+    [RegularExpression(@"^.*\.(jpg|jpeg|png|gif)$", ErrorMessage = "Hãy nhập đúng file ảnh .(jpg|jpeg|png|gif) ")]
     public string? Anh { get; set; }
 
     public virtual ICollection<DatPhong> DatPhongs { get; } = new List<DatPhong>();

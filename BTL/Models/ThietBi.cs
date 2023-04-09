@@ -14,7 +14,7 @@ public partial class ThietBi
     [RegularExpression(@"^\d+$", ErrorMessage = "Vui lòng nhập giá trị số.")]
     [Range(0, int.MaxValue, ErrorMessage = "Giá trị phải lớn hơn 0.")]
     public double? Gia { get; set; }
-
+    [RegularExpression(@"^.*\.(jpg|jpeg|png|gif)$", ErrorMessage = "Hãy nhập đúng file ảnh .(jpg|jpeg|png|gif) ")]
     public string? Anh { get; set; }
 
     public virtual ICollection<SuDungThietBi> SuDungThietBis { get; } = new List<SuDungThietBi>();
