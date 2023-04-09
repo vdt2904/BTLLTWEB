@@ -273,7 +273,7 @@ public partial class QlkhachSanAspContext : DbContext
                 .HasMaxLength(10)
                 .HasColumnName("MaTB");
             entity.Property(e => e.MaPhong).HasMaxLength(10);
-            entity.Property(e => e.NgaySd)
+            entity.Property(e => e.NgaySD)
                 .HasColumnType("date")
                 .HasColumnName("NgaySD");
             entity.Property(e => e.TinhTrang).HasMaxLength(50);
