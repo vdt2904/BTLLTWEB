@@ -22,4 +22,6 @@ public partial class KhachHang
     public string? LoaiKhachHang { get; set; }
 
     public virtual ICollection<HoaDon> HoaDons { get; } = new List<HoaDon>();
+
+    public virtual ICollection<LoginKh> LoginKhs { get; } = new List<LoginKh>();
 }

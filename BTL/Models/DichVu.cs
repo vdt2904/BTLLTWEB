@@ -17,5 +17,7 @@ public partial class DichVu
     [RegularExpression(@"^.*\.(jpg|jpeg|png|gif)$", ErrorMessage = "Hãy nhập đúng file ảnh .(jpg|jpeg|png|gif) ")]
     public string? Anh { get; set; }
 
+    public string? GioiThieu { get; set; }
+
     public virtual ICollection<SuDungDichVu> SuDungDichVus { get; } = new List<SuDungDichVu>();
 }

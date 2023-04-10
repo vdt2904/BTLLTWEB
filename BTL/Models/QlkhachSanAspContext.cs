@@ -19,6 +19,8 @@ public partial class QlkhachSanAspContext : DbContext
 
     public virtual DbSet<Csvc> Csvcs { get; set; }
 
+    public virtual DbSet<Ctanh> Ctanhs { get; set; }
+
     public virtual DbSet<DatPhong> DatPhongs { get; set; }
 
     public virtual DbSet<DichVu> DichVus { get; set; }
@@ -30,6 +32,8 @@ public partial class QlkhachSanAspContext : DbContext
     public virtual DbSet<LoaiPhong> LoaiPhongs { get; set; }
 
     public virtual DbSet<Login> Logins { get; set; }
+
+    public virtual DbSet<LoginKh> LoginKhs { get; set; }
 
     public virtual DbSet<NhanVien> NhanViens { get; set; }
 
@@ -76,6 +80,22 @@ public partial class QlkhachSanAspContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
         });
 
+        modelBuilder.Entity<Ctanh>(entity =>
+        {
+            entity.HasKey(e => e.TenAnh);
+
+            entity.ToTable("CTAnh");
+
+            entity.Property(e => e.TenAnh).HasMaxLength(50);
+            entity.Property(e => e.MaLp)
+                .HasMaxLength(10)
+                .HasColumnName("MaLP");
+
+            entity.HasOne(d => d.MaLpNavigation).WithMany(p => p.Ctanhs)
+                .HasForeignKey(d => d.MaLp)
+                .HasConstraintName("FK_CTAnh_LoaiPhong");
+        });
+
         modelBuilder.Entity<DatPhong>(entity =>
         {
             entity.HasKey(e => new { e.MaPhong, e.SoHoaDon });
@@ -108,6 +128,7 @@ public partial class QlkhachSanAspContext : DbContext
                 .HasMaxLength(10)
                 .HasColumnName("MaDV");
             entity.Property(e => e.Anh).HasMaxLength(50);
+            entity.Property(e => e.GioiThieu).HasColumnType("text");
             entity.Property(e => e.TenDv)
                 .HasMaxLength(50)
                 .HasColumnName("TenDV");
@@ -171,7 +192,7 @@ public partial class QlkhachSanAspContext : DbContext
                 .HasMaxLength(10)
                 .HasColumnName("MaLP");
             entity.Property(e => e.Anh).HasMaxLength(50);
-            entity.Property(e => e.KichThuoc).HasMaxLength(50);
+            entity.Property(e => e.KichThuoc).HasMaxLength(20);
             entity.Property(e => e.LoaiPhong1)
                 .HasMaxLength(50)
                 .HasColumnName("LoaiPhong");
@@ -194,6 +215,22 @@ public partial class QlkhachSanAspContext : DbContext
             entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.Logins)
                 .HasForeignKey(d => d.MaNv)
                 .HasConstraintName("FK_Login_NhanVien");
+        });
+
+        modelBuilder.Entity<LoginKh>(entity =>
+        {
+            entity.ToTable("LoginKH");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.MaKh)
+                .HasMaxLength(10)
+                .HasColumnName("MaKH");
+            entity.Property(e => e.Password).HasMaxLength(50);
+            entity.Property(e => e.Username).HasMaxLength(50);
+
+            entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.LoginKhs)
+                .HasForeignKey(d => d.MaKh)
+                .HasConstraintName("FK_LoginKH_KhachHang");
         });
 
         modelBuilder.Entity<NhanVien>(entity =>
