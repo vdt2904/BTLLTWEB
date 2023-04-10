@@ -1,0 +1,14 @@
+﻿@model IEnumerable<LoaiPhong>
+
+<div class="a-col">
+	<section>
+		<select class="cs-select cs-skin-border">
+			<option value="" disabled selected>Select Room</option>
+			@foreach (var item in Model)
+			{
+				<option value="1" >@item.LoaiPhong1</option>
+			}
+		</select>
+	</section>
+</div>
+

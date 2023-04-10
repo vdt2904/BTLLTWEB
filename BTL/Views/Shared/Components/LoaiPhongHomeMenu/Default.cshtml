@@ -1,0 +1,6 @@
+﻿@model IEnumerable<LoaiPhong>
+
+@foreach (var item in Model)
+{
+    <li><a style="cursor:pointer" asp-controller="Room" asp-action="PhongTheoLoai" asp-route-maLoai="@item.MaLp">@item.LoaiPhong1</a></li>
+}

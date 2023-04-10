@@ -1,0 +1,19 @@
+﻿@model IEnumerable<LoaiPhong>
+
+<select id="lstRoom" class="cs-select cs-skin-border" onchange="GetSelectValue();">
+	<option value="" disabled selected>Select Room</option>
+	@foreach (var item in Model)
+	{
+		var tmp = item.MaLp;
+		<option value="@tmp">@item.LoaiPhong1</option>
+	}
+</select>
+
+<script>
+	function GetSelectValue() {
+		var selectVal = document.getElementById("lstRoom");
+		TempData["Message"] = selectVal;
+	}
+</script>
+
+

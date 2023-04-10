@@ -1,0 +1,128 @@
+﻿@model LoaiPhong;
+@{
+    ViewData["Title"] = "ChiTietPhong";
+    Layout = "~/Views/Shared/_LayoutRoom.cshtml";
+}
+
+<section class="product-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__pic">
+                    <div class="product__details__pic__item">
+                        <img class="product__details__pic__item--large"
+                             src="@Url.Content("../images/" + Model.Anh)" alt="">
+                    </div>
+                    <div class="product__details__pic__slider owl-carousel">
+                        @foreach (var img in ViewBag.ctAnh)
+                        {
+                            <img data-imgbigurl="@Url.Content("../CTPhong/img/" + img.TenAnh)"
+                                 src="@Url.Content("../CTPhong/img/" + img.TenAnh)" alt="">
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="product__details__text">
+                    <h3>@Model.LoaiPhong1</h3>
+                    <div class="product__details__rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                        <span>(18 reviews)</span>
+                    </div>
+                    <h4 style="margin-bottom: 10px">@ViewBag.TenPhong</h4>
+                    <div class="product__details__price">@Model.Gia/night</div>
+                    <div class="product__details__quantity">
+                        <div class="quantity">
+                            <div class="pro-qty">
+                                <input type="text" value="1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="primary-btn">Booking</a>
+
+                    <ul>
+                        <li><b>Tình Trạng</b> <span>@ViewBag.TinhTrang</span></li>
+                        <li><b>Số người tối đa</b> <span>@Model.SoNguoiToiDa</span></li>
+                        <li><b>Kích thước</b> <span>@Model.KichThuoc</span></li>
+                        <li>
+                            <b>Share</b>
+                            <div class="share">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="product__details__tab">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                               aria-selected="true">Description</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                               aria-selected="false">Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                               aria-selected="false">Reviews <span>(1)</span></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Rooms Infomation</h6>
+                                <p>@Model.ThongTin</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Rooms Infomation</h6>
+                                <p>@Model.ThongTin</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabs-3" role="tabpanel">
+                            <div class="product__details__tab__desc">
+                                <h6>Rooms Infomation</h6>
+                                <p>@Model.ThongTin</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<link rel="stylesheet" href="../CTPhong/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="../CTPhong/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="../CTPhong/css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="../CTPhong/css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="../CTPhong/css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="../CTPhong/css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="../CTPhong/css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="../CTPhong/css/style.css" type="text/css">
+
+
+<script src="../CTPhong/js/jquery-3.3.1.min.js"></script>
+<script src="../CTPhong/js/bootstrap.min.js"></script>
+<script src="../CTPhong/js/jquery.nice-select.min.js"></script>
+<script src="../CTPhong/js/jquery-ui.min.js"></script>
+<script src="../CTPhong/js/jquery.slicknav.js"></script>
+<script src="../CTPhong/js/mixitup.min.js"></script>
+<script src="../CTPhong/js/owl.carousel.min.js"></script>
+<script src="../CTPhong/js/main.js"></script>
+
+
+
