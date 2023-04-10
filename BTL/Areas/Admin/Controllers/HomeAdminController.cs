@@ -1,4 +1,5 @@
-﻿using BTL.Models;
+﻿using BTL.Areas.Admin.Models.Authentication;
+using BTL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,18 +10,19 @@ using X.PagedList;
 namespace BTL.Areas.Admin.Controllers
 {
 	[Area("admin")]
-	[Route("admin")]
-	[Route("admin/homeadmin")]
-	public class HomeAdminController : Controller
+    [Route("admin")]
+    [Route("admin/homeadmin")]
+    [Authentication]
+    public class HomeAdminController : Controller
 	{
-		QlkhachSanAspContext db = new QlkhachSanAspContext();
+        QlkhachSanAspContext db = new QlkhachSanAspContext();
 
 		[Route("")]
 		[Route("index")]
 		public IActionResult Index()
 		{
 
-			return View();
+            return View();
 		}
 		//them sua xoa phong begin!
 		//hien thi phong begin!
