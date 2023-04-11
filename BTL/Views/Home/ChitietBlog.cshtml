@@ -1,0 +1,23 @@
+﻿@model Blog
+@{
+    ViewData["Tittle"] = "ReadBlog";
+    Layout = "~/Views/Shared/_LayoutBlog.cshtml";
+}
+
+<div class="site-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-5 mb-md-0">
+                <img src="@Url.Content("../images/AnhBlog/"+Model.Anh)" alt="" class="col-md-10">
+            </div>
+            <div class="col-md-5 ml-auto">
+
+                <div class="section-heading text-left">
+                    <h2 class="mb-5">@Model.TieuDe</h2>
+                </div>
+                <p class="mb-4">@Model.ThongTin</p>
+                <p><a asp-action="Blog" class="popup-vimeo text-uppercase">Xem thêm Blog <span class="icon-arrow-right small"></span></a></p>
+            </div>
+        </div>
+    </div>
+</div>

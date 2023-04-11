@@ -12,6 +12,8 @@ builder.Services.AddDbContext<QlkhachSanAspContext>(x => x.UseSqlServer(conencti
 
 builder.Services.AddScoped<ILoaiPhongRepository, LoaiPhongRepository>();
 
+builder.Services.AddScoped<IDichVu, MDichVu>();
+
 
 builder.Services.AddSession(options =>
 {

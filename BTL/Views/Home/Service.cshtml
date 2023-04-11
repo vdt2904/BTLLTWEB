@@ -1,0 +1,27 @@
+﻿@{
+	ViewData["Tittle"] = "Service";
+	Layout = "~/Views/Shared/_LayoutService.cshtml";
+}
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<DichVu>
+@foreach (var item in Model)
+{
+	<div class="feature-full-1col">
+		<div class="image" style="background-image: url(@Url.Content("../images/AnhDichVuf1/"+item.Anh));">
+			<div class="descrip text-center">
+				<p><small>Cost</small><span>@item.Gia/turn</span></p>
+			</div>
+		</div>
+		<div class="desc">
+			<h3>@item.TenDv</h3>
+
+			<p><a href="#" class="btn btn-primary btn-luxe-primary">Book Now <i class="ti-angle-right"></i></a></p>
+		</div>
+	</div>
+}
+<div class="feature-full-1col">
+	@Html.PagedListPager(Model, page => Url.Action("Service", new {page=page}), new X.PagedList.Web.Common.PagedListRenderOptions(){
+	LiElementClasses = new List<String> {"page-item"},
+	PageClasses = new List<String> {"page-link"}
+	})
+</div>
