@@ -29,9 +29,7 @@ namespace BTL.Areas.Admin.Controllers
             else
             {
                 return RedirectToAction("Index", "HomeAdmin");
-            }
-
-            
+            }           
         }
         [Route("Index")]
         [HttpPost]
