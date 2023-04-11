@@ -69,8 +69,6 @@ namespace BTL.Controllers
             int pageSize = 2;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var lstBlog = db.Blogs.AsNoTracking().OrderBy(x => x.NgayDang);
-
-<<<<<<< HEAD
             PagedList<Blog> lst = new PagedList<Blog>(lstBlog, pageNumber, pageSize);
             return View(lst);
 
@@ -95,23 +93,10 @@ namespace BTL.Controllers
         {
             return View();
         }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-=======
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
-	}
->>>>>>> a9ad526cddf29978633fcc3cc264cf8d8ca4e46d
 }
