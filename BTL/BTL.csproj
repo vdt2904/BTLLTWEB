@@ -24,4 +24,13 @@
     <Folder Include="Areas\Admin\Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\1layout\images\svg\bicycle14.svg" />
+    <None Include="wwwroot\1layout\images\svg\car72.svg" />
+    <None Include="wwwroot\1layout\images\svg\cup74.svg" />
+    <None Include="wwwroot\1layout\images\svg\massage2.svg" />
+    <None Include="wwwroot\1layout\images\svg\restaurant23.svg" />
+    <None Include="wwwroot\1layout\images\svg\swimming21.svg" />
+  </ItemGroup>
+
 </Project>

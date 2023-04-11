@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+    Layout = "~/Views/Shared/_LayoutContact.cshtml";
+}
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
+<div class="col-md-6">
+    <div id="map" class="fh5co-map"></div>
+</div>
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoidHJ1b25ncWgiLCJhIjoiY2xmcTl2aHZuMHY1ZTNxbWgybHpsdXlvdCJ9.fTAzTqIv9GtALn05XhPphw';
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/streets-v12', // style URL
+        center: [105.80346341264728, 21.028274658037613], // starting position [lng, lat]
+        zoom: 13, // starting zoom
+
+    });
+    // them nut zoomin zoomout
+    map.addControl(new mapboxgl.NavigationControl({
+        showCompass: true,
+        showZoom: true,
+    }));
+    // LAy vi tri tren ban do
+    map.addControl(new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true
+    }));
+    //Hien thi ti le ban do
+    var scale = new mapboxgl.ScaleControl({
+        maxWidth: 80,
+        unit: 'imperial'
+    });
+    map.addControl(scale);
+    scale.setUnit('metric');
+    //nut FullScreen
+    map.addControl(new mapboxgl.FullscreenControl());
+    // hien thi vi tri click
+    map.on('dblclick', function (e) {
+        new mapboxgl.Marker({
+            color: 'red',
+            draggable: true,
+        }).setLngLat([105.80346341264728, 21.028274658037613])
+            .addTo(map);
+    });
+    // dan duong
+
+    map.addControl(new MapboxDirections({
+        accessToken: mapboxgl.accessToken
+    }),
+        'top-left'
+    );
+</script>

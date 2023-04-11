@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Tittle"] = "Our Blog";
+    Layout = "~/Views/Shared/_LayoutBlog.cshtml";
+}
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Blog>
+@foreach(var item in Model)
+{
+    <div class="col-md-6 col-lg-4 mb-5">
+        <div class="hotel-room text-center">
+            <a href="#" class="d-block mb-4 thumbnail"><img src="@Url.Content("../images/AnhBlog/"+item.Anh)" alt="Image" class="img-fluid"></a>
+            <div class="p-4">
+                <h3 class="heading mb-3"><a a asp-controller="home" asp-action="ChitietBlog" asp-route-mablog="@item.Idblog">@item.TieuDe</a></h3>
+                <p>@item.NgayDang</p>
+                <p><a asp-controller="home" asp-action="ChitietBlog" asp-route-mablog="@item.Idblog"  class="text-primary">Read More <span class="icon-arrow-right small"></span></a></p>
+            </div>
+        </div>
+    </div>
+}
+<div class="feature-full-1col">
+	@Html.PagedListPager(Model, page => Url.Action("Blog", new {page=page}), new X.PagedList.Web.Common.PagedListRenderOptions(){
+	LiElementClasses = new List<String> {"page-item"},
+	PageClasses = new List<String> {"page-link"}
+	})
+</div

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<DichVu>
+@foreach(var item in Model)
+{
+    var link = "https://localhost:7186/api/DichvuApi/" + item.MaDv;
+    <a onclick="Dichvu('@link')">
+	<i class="flaticon-restaurant icon"></i>
+	<span>@item.TenDv</span>
+</a>
+}
+<script>
+    function Dichvu(getUrl) {
+        var str = ''
+        $.ajax({
+            type: 'GET',
+            url: getUrl,
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, val) {
+                    str += '<div class="container">';
+                        str+='  < div class="row" >';
+                            str+='<div class="col-md-6" >';
+                               str+='<img src="../images/AnhDichVu/Dichvu01.jpg" class="col-5 col-md-5" alt = "Image" >';
+                                   str+= '</div>';
+                                   str+= '< div class="col-md-6" >';
+                                       str+='<span class="super-heading-sm" > World Class </span>';
+                                            str+='< h3 class="heading" > Bể bơi </h3>';
+
+                                                str+='< p class="service-hour" >';                                                    <span>Service Hours </span>
+                                                  str+='< strong > 7: 30 AM - 8: 00 PM </strong>';
+                                                           str+=' </p>';
+
+                    str += '   </div>';
+                    str += ' </div>';
+                    str += ' </div> ';
+                    //str+='<div  class="tab-content active show" >';
+                    // str += '<div class="container" >';
+                    // str+= '<div class="row" >';
+                    // str+='<div class="col-md-6" >';
+                    //str += '<img src="../images/AnhDichVu/' + $.trim(val.anh) + '" class="col-md-6" alt = "Image" >';
+                    //    str+='</div>';
+                    //                str+='<div class="col-md-6" >';
+
+                    //str += ' <h3 class="heading" >'+ val.tenDv+'</h3>';
+
+                    //str += '     <p class="service-hour" >';
+                    //str += '    <p>Service Hours </p>';
+                    //str += '     <strong > 7: 30 AM - 8: 00 PM </strong>';
+                    //str += '        </p>';
+                    //str += '       </div>';
+                    //str += '        </div>';
+                    //str += '        </div>';
+                    //str += '        </div>';
+                });
+                $('#displaydichvu').html(str);
+            },
+            Error: function (xhr) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+</script>
