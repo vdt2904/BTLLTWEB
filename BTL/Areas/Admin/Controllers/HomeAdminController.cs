@@ -1,11 +1,14 @@
-﻿using BTL.Areas.Admin.Models.Authentication;
+﻿using BTL.Areas.Admin.Models;
+using BTL.Areas.Admin.Models.Authentication;
 using BTL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.Linq;
 using X.PagedList;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BTL.Areas.Admin.Controllers
 {
@@ -21,12 +24,38 @@ namespace BTL.Areas.Admin.Controllers
 		[Route("index")]
 		public IActionResult Index()
 		{
-
-            return View();
+            DateTime date = DateTime.Now;   
+            ViewBag.Years = new SelectList(db.Csvcs.Select(x => x.Nam).Distinct().OrderByDescending(x => x).ToList(), date.Year);
+           
+            var a = db.Csvcs
+                .Where(x => x.Nam == date.Year)
+                .OrderBy(x=>x.Thang)
+                .Select(x => new BarChartViewModel { Labels = new List<string> { "Tháng: "+x.Thang.ToString() }, Data = new List<double?> { x.TongTien } })
+                .ToList();
+            double totalMoney = db.Csvcs.Where(x => x.Nam == date.Year).Sum(x => x.TongTien) ?? 0;
+            string b = totalMoney.ToString("N0");
+            TempData["TongTien"] = b;
+            return View(a);
 		}
-		//them sua xoa phong begin!
-		//hien thi phong begin!
-		[Route("phongks")]
+        [Route("Index")]
+        [HttpPost]
+        public IActionResult Index(int year)
+        {
+
+            ViewBag.Years = new SelectList(db.Csvcs.Select(x => x.Nam).Distinct().OrderByDescending(x => x).ToList(), year);
+            var a = db.Csvcs
+                .Where(x => x.Nam == year)
+                .OrderBy(x => x.Thang)
+                .Select(x => new BarChartViewModel { Labels = new List<string> { "Tháng: " + x.Thang.ToString() }, Data = new List<double?> { x.TongTien } })
+                .ToList();
+            double totalMoney = db.Csvcs.Where(x => x.Nam == year).Sum(x => x.TongTien) ?? 0;
+            string b = totalMoney.ToString("N0");
+            TempData["TongTien"] = b;
+            return View(a);
+        }
+        //them sua xoa phong begin!
+        //hien thi phong begin!
+        [Route("phongks")]
 		public IActionResult PhongKS(int? page)
 		{
 			int pageSize = 15;
@@ -237,7 +266,7 @@ namespace BTL.Areas.Admin.Controllers
         // Sửa nhân viên
         [Route("SuaNhanVien")]
         [HttpGet]
-        public IActionResult SuaNhanVien(String manv)
+        public IActionResult SuaNhanVien(string manv)
         {
             var nhanvien = db.NhanViens.Find(manv);
             return View(nhanvien);
@@ -260,7 +289,7 @@ namespace BTL.Areas.Admin.Controllers
         //Xóa nhân viên
         [Route("XoaNhanVien")]
         [HttpGet]
-        public IActionResult XoaNhanVien(String manv)
+        public IActionResult XoaNhanVien(string manv)
         {
             TempData["Message"] = "";
             var nhanvien = db.HoaDons.Where(x => x.MaNv == manv).ToList();

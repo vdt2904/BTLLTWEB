@@ -1,32 +1,51 @@
-﻿
+﻿@using BTL.Areas.Admin.Models
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<BarChartViewModel>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                Bar chart
+                Tiền cơ sở vật chất
             </div>
             <div class="card-body">
+                @using (Html.BeginForm("Index", "HomeAdmin", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label>Năm:</label>
+                        @Html.DropDownList("year", ViewBag.Years as SelectList, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                    </div>
+                }
                 <canvas class="my-4 h-25" id="bar"></canvas>
+                <div>
+                    <label>Tổng tiền: <span>@TempData["TongTien"]</span></label>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
 
+
+
 <script type="text/javascript">
-    var chart = document.getElementById('bar');
-    var mychart = new Chart(chart, {
+    var ctx = document.getElementById('bar');
+    var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['001','002','003'],
+            labels: @Html.Raw(Json.Serialize(Model.Select(x => x.Labels))),
             datasets: [{
-                label: 'bar chart',
-                data: [100,200,300],
+                label: 'Tổng tiền',
+                data: @Html.Raw(Json.Serialize(Model.Select(x => x.Data))),
                 backgroundColor: 'rgba(6,128,250)'
             }]
         },
@@ -34,10 +53,11 @@
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero: true
                     }
                 }]
             }
         }
     });
 </script>
+
