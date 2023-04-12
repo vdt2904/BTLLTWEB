@@ -225,9 +225,9 @@
                         </a>
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="#">Hóa Đơn</a></li>     <!--quản lý HD-->
-                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="#">Khách hàng</a></li>
-                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="#">Thông tin đật phòng</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="HoaDon">Hóa Đơn</a></li>     <!--quản lý HD-->
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="KhachHang">Khách hàng</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="ThongTinDatPhong">Thông tin đặt phòng</a></li>
                             </ul>
                         </div>
                     </li>            
@@ -245,7 +245,7 @@
                         </a>
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="#">Doanh Thu</a></li>     <!--quản lý HD-->
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="DoanhThu">Doanh Thu</a></li>     <!--quản lý HD-->
                                 <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="#">Cơ sở vật chất</a></li>
                             </ul>
                         </div>
@@ -284,5 +284,6 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    @RenderSection("scripts", false)
 </body>
 </html>

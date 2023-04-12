@@ -15,7 +15,7 @@ public partial class LoaiPhong
     public int? SoNguoiToiDa { get; set; }
     [RegularExpression(@"^\d+$", ErrorMessage = "Vui lòng nhập giá trị số.")]
     [Range(100000, int.MaxValue, ErrorMessage = "Giá trị phải lớn hơn 100000.")]
-    public double? Gia { get; set; }
+    public float? Gia { get; set; }
     [RegularExpression(@"^.*\.(jpg|jpeg|png|gif)$", ErrorMessage = "Hãy nhập đúng file ảnh .(jpg|jpeg|png|gif) ")]
     public string? Anh { get; set; }
 

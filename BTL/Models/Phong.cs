@@ -6,7 +6,6 @@ namespace BTL.Models;
 public partial class Phong
 {
     [System.ComponentModel.DataAnnotations.Required(ErrorMessage ="Không được để trống")]
-    [StringLength(maximumLength:6,MinimumLength =6,ErrorMessage ="Chỉ được nhập 6 ký tự")]
     public string MaPhong { get; set; } = null!;
     [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Không được để trống")]
     public string? TenPhong { get; set; }
