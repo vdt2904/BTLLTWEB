@@ -4,5 +4,40 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Index</h1>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                Bar chart
+            </div>
+            <div class="card-body">
+                <canvas class="my-4 h-25" id="bar"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script type="text/javascript">
+    var chart = document.getElementById('bar');
+    var mychart = new Chart(chart, {
+        type: 'bar',
+        data: {
+            labels: ['001','002','003'],
+            datasets: [{
+                label: 'bar chart',
+                data: [100,200,300],
+                backgroundColor: 'rgba(6,128,250)'
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+</script>
