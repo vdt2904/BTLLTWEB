@@ -6,9 +6,9 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>ThemNhanVien</h1>
+<h1>Thêm nhân viên</h1>
 
-<h4>NhanVien</h4>
+<h4>Nhân Viên</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,6 +20,7 @@
                 <span asp-validation-for="MaNv" class="text-danger"></span>
                 <p style="color:red">@TempData["Message"]</p>
             </div>
+            <p style="color:red">@TempData["Message"]</p>
             <div class="form-group">
                 <label asp-for="TenNv" class="control-label"></label>
                 <input asp-for="TenNv" class="form-control" />

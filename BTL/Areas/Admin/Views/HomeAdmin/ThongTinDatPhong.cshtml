@@ -1,0 +1,67 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using BTL.Models;
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<DatPhong>
+
+@{
+    ViewData["Title"] = "ThongTinDatPhong";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Thông tin đặt phòng</h1>
+<p style="color:red">@TempData["Message"]</p>
+<p>@TempData["Message"]</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Ngày đến
+            </th>
+            <th>
+                Ngày đi
+            </th>
+            <th>
+                Số người
+            </th>
+            <th>
+                Mã phòng
+            </th>
+            <th>
+                Số hóa đơn
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayDi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoNguoi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoHoaDon)
+            </td>
+            <td>
+                    <a asp-action="SuaTTDatPhong" asp-route-maphong="@item.MaPhong" asp-route-sohd="@item.SoHoaDon">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.SoHoaDon">Details</a> |
+                    <a asp-action="XoaTTDatPhong" asp-route-maphong="@item.MaPhong" asp-route-sohd="@item.SoHoaDon">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div style="margin: 0 auto">
+    @Html.PagedListPager(Model,page => Url.Action("ThongTinDatPhong", new {page=page, maloai = ViewBag.maloai}),new X.PagedList.Web.Common.PagedListRenderOptions(){
+    LiElementClasses = new List<String> {"page-item"},
+    PageClasses = new List<String> {"page-link"}
+    })
+</div>

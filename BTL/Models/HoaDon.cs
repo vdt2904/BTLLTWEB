@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BTL.Models;
 
 public partial class HoaDon
 {
     public string SoHoaDon { get; set; } = null!;
-
+    [DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     public DateTime? NgayThanhToan { get; set; }
 
     public string? MaNv { get; set; }

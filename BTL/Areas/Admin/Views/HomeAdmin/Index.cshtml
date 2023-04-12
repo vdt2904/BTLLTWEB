@@ -1,14 +1,17 @@
 ﻿@using BTL.Areas.Admin.Models
+@using static BTL.Areas.Admin.Controllers.HomeAdminController;
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<BarChartViewModel>
+@*@model (List<BarChartViewModel> a,List<BarChartViewModel> a1)*@
+@model MyViewModel
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
+
         <div class="card">
             <div class="card-header">
                 Tiền cơ sở vật chất
@@ -18,23 +21,37 @@
                 {
                     <div class="form-group">
                         <label>Năm:</label>
-                        @Html.DropDownList("year", ViewBag.Years as SelectList, new { @class = "form-control" })
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                        @Html.DropDownList("year", ViewBag.Years as SelectList, new { @class = "form-control", @onchange = "submit()" })
                     </div>
                 }
-                <canvas class="my-4 h-25" id="bar"></canvas>
+                <canvas class="my-3 h-20" id="bar"></canvas>
                 <div>
-                    <label>Tổng tiền: <span>@TempData["TongTien"]</span></label>
+                    <label>Tổng tiền: <span>@Model.TongTien</span></label>
                 </div>
             </div>
-
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                Doanh Thu
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Index", "HomeAdmin", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label>Năm:</label>
+                        @Html.DropDownList("year", ViewBag.Yearss as SelectList, new { @class = "form-control", @onchange = "submit()" })
+                    </div>
+                }
+                <canvas class="my-3 h-20" id="bardt"></canvas>
+                <div>
+                    <label>Tổng tiền: <span>@Model.DoanhThu</span></label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 
 
 <script type="text/javascript">
@@ -42,10 +59,33 @@
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: @Html.Raw(Json.Serialize(Model.Select(x => x.Labels))),
+            labels: @Html.Raw(Json.Serialize(Model.Csvcs.Select(x => x.Labels))),
             datasets: [{
                 label: 'Tổng tiền',
-                data: @Html.Raw(Json.Serialize(Model.Select(x => x.Data))),
+                data: @Html.Raw(Json.Serialize(Model.Csvcs.Select(x => x.Data))),
+                backgroundColor: 'rgba(6,128,250)'
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
+<script type="text/javascript">
+    var ctx = document.getElementById('bardt');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.TDoanhThus.Select(x => x.Labels))),
+            datasets: [{
+                label: 'Tổng tiền',
+                data: @Html.Raw(Json.Serialize(Model.TDoanhThus.Select(x => x.Data))),
                 backgroundColor: 'rgba(6,128,250)'
             }]
         },

@@ -1,0 +1,56 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model BTL.Models.DatPhong
+
+@{
+    ViewData["Title"] = "SuaTTDatPhong";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Sửa thông tin đặt phòng</h1>
+
+<h4>Đặt phòng</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="SuaTTDatPhong">
+
+@*            <input type="hidden" asp-for="MaPhong" />
+            <span asp-validation-for="MaPhong" class="text-danger"></span>
+            <input type="hidden" asp-for="SoHoaDon" />
+            <span asp-validation-for="SoHoaDon" class="text-danger"></span>*@
+            <div class="form-group">
+                <label asp-for="MaPhong" class="control-label"></label>
+                <input asp-for="MaPhong" class="form-control" />
+                <span asp-validation-for="MaPhong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoHoaDon" class="control-label"></label>
+                <input asp-for="SoHoaDon" class="form-control" />
+                <span asp-validation-for="SoHoaDon" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayDen" class="control-label"></label>
+                <input asp-for="NgayDen" class="form-control" />
+                <span asp-validation-for="NgayDen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayDi" class="control-label"></label>
+                <input asp-for="NgayDi" class="form-control" />
+                <span asp-validation-for="NgayDi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoNguoi" class="control-label"></label>
+                <input asp-for="SoNguoi" class="form-control" />
+                <span asp-validation-for="SoNguoi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

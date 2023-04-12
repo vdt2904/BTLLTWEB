@@ -122,9 +122,9 @@
                         </a>
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="#">Hóa Đơn</a></li>     <!--quản lý HD-->
-                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="#">Khách hàng</a></li>
-                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="#">Thông tin đật phòng</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="HoaDon">Hóa Đơn</a></li>     <!--quản lý HD-->
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="KhachHang">Khách hàng</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="ThongTinDatPhong">Thông tin đặt phòng</a></li>
                             </ul>
                         </div>
                     </li>            
@@ -133,19 +133,6 @@
                             <span class="menu-title">Nhân viên</span>
                             <i class="mdi mdi-chart-bar menu-icon"></i>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                            <span class="menu-title">Báo cáo</span>
-                            <i class="menu-arrow"></i>
-                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                        </a>
-                        <div class="collapse" id="ui-basic">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="#">Doanh Thu</a></li>     <!--quản lý HD-->
-                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="HomeAdmin" asp-action="#">Cơ sở vật chất</a></li>
-                            </ul>
-                        </div>
                     </li>
                 </ul>
             </nav>
@@ -181,5 +168,6 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    @RenderSection("scripts", false)
 </body>
 </html>

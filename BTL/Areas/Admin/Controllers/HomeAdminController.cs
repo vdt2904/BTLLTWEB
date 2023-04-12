@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using X.PagedList;
@@ -24,34 +26,67 @@ namespace BTL.Areas.Admin.Controllers
 		[Route("index")]
 		public IActionResult Index()
 		{
+            //csvc
             DateTime date = DateTime.Now;   
-            ViewBag.Years = new SelectList(db.Csvcs.Select(x => x.Nam).Distinct().OrderByDescending(x => x).ToList(), date.Year);
-           
-            var a = db.Csvcs
-                .Where(x => x.Nam == date.Year)
-                .OrderBy(x=>x.Thang)
-                .Select(x => new BarChartViewModel { Labels = new List<string> { "Tháng: "+x.Thang.ToString() }, Data = new List<double?> { x.TongTien } })
-                .ToList();
-            double totalMoney = db.Csvcs.Where(x => x.Nam == date.Year).Sum(x => x.TongTien) ?? 0;
-            string b = totalMoney.ToString("N0");
-            TempData["TongTien"] = b;
-            return View(a);
-		}
-        [Route("Index")]
-        [HttpPost]
-        public IActionResult Index(int year)
-        {
 
-            ViewBag.Years = new SelectList(db.Csvcs.Select(x => x.Nam).Distinct().OrderByDescending(x => x).ToList(), year);
-            var a = db.Csvcs
-                .Where(x => x.Nam == year)
+            var viewModel = new MyViewModel();
+
+            //csvc
+            ViewBag.Years = new SelectList(db.Csvcs.Select(x => x.Nam).Distinct().OrderByDescending(x => x).ToList(), date.Year);
+            viewModel.Csvcs = db.Csvcs
+                .Where(x => x.Nam == date.Year)
                 .OrderBy(x => x.Thang)
                 .Select(x => new BarChartViewModel { Labels = new List<string> { "Tháng: " + x.Thang.ToString() }, Data = new List<double?> { x.TongTien } })
                 .ToList();
-            double totalMoney = db.Csvcs.Where(x => x.Nam == year).Sum(x => x.TongTien) ?? 0;
-            string b = totalMoney.ToString("N0");
-            TempData["TongTien"] = b;
-            return View(a);
+            double totalMoney = db.Csvcs.Where(x => x.Nam == date.Year).Sum(x => x.TongTien) ?? 0;
+            viewModel.TongTien = totalMoney.ToString("N0");
+            //doanhthu
+            ViewBag.Yearss = new SelectList(db.TDoanhThus.Select(x => x.Nam).Distinct().OrderByDescending(x => x).ToList(), date.Year);
+            viewModel.TDoanhThus = db.TDoanhThus
+                .Where(x => x.Nam == date.Year)
+                .OrderBy(x => x.Thang)
+                .Select(x => new BarChartViewModel { Labels = new List<string> { "Tháng: " + x.Thang.ToString() }, Data = new List<double?> { x.TongTien } })
+                .ToList();
+            double totalDT = db.TDoanhThus.Where(x => x.Nam == date.Year).Sum(x => x.TongTien) ?? 0;
+            viewModel.DoanhThu = totalDT.ToString("N0");
+
+            return View(viewModel);
+
+        }
+        [Route("Index")]
+        [HttpPost]
+         public IActionResult Index(int year)
+         {
+             var viewModel = new MyViewModel();
+
+             //csvc
+             ViewBag.Years = new SelectList(db.Csvcs.Select(x => x.Nam).Distinct().OrderByDescending(x => x).ToList(), year);
+             viewModel.Csvcs = db.Csvcs
+                 .Where(x => x.Nam == year)
+                 .OrderBy(x => x.Thang)
+                 .Select(x => new BarChartViewModel { Labels = new List<string> { "Tháng: " + x.Thang.ToString() }, Data = new List<double?> { x.TongTien } })
+                 .ToList();
+             double totalMoney = db.Csvcs.Where(x => x.Nam == year).Sum(x => x.TongTien) ?? 0;
+             viewModel.TongTien = totalMoney.ToString("N0");
+
+             //doanhthu
+             ViewBag.Yearss = new SelectList(db.TDoanhThus.Select(x => x.Nam).Distinct().OrderByDescending(x => x).ToList(), year);
+             viewModel.TDoanhThus = db.TDoanhThus
+                 .Where(x => x.Nam == year)
+                 .OrderBy(x => x.Thang)
+                 .Select(x => new BarChartViewModel { Labels = new List<string> { "Tháng: " + x.Thang.ToString() }, Data = new List<double?> { x.TongTien } })
+                 .ToList();
+             double totalDT = db.TDoanhThus.Where(x => x.Nam == year).Sum(x => x.TongTien) ?? 0;
+             viewModel.DoanhThu = totalDT.ToString("N0");
+
+             return View(viewModel);
+         }
+        public class MyViewModel
+        {
+            public List<BarChartViewModel> Csvcs { get; set; }
+            public List<BarChartViewModel> TDoanhThus { get; set; }
+            public string TongTien { get; set; }
+            public string DoanhThu { get; set; }
         }
         //them sua xoa phong begin!
         //hien thi phong begin!
@@ -228,7 +263,7 @@ namespace BTL.Areas.Admin.Controllers
         [Route("nhanvien")]
         public IActionResult NhanVien(int? page)
         {
-            int pageSize = 15;
+            int pageSize = 6;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var lstnhanvien = db.NhanViens.AsNoTracking().OrderBy(x => x.TenNv);
             PagedList<NhanVien> lst = new PagedList<NhanVien>(lstnhanvien, pageNumber, pageSize);
@@ -240,6 +275,10 @@ namespace BTL.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult ThemNhanVien()
         {
+            if (TempData.ContainsKey("ErrorMessage"))
+            {
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+            }
             return View();
         }
         [Route("ThemNhanVien")]
@@ -250,11 +289,10 @@ namespace BTL.Areas.Admin.Controllers
             TempData["Message"] = "";
             if (ModelState.IsValid)
             {
-                TempData["Message"] = "Mã nhân viên đã có";
-                var snv = db.NhanViens.Where(x => x.MaNv == nhanvien.MaNv).FirstOrDefault();
-                if (snv != null)
+                if (db.NhanViens.Any(x => x.MaNv == nhanvien.MaNv))
                 {
-                    return View(nhanvien);
+                    TempData["Message"] = "Mã nhân viên đã tồn tại";
+                    return RedirectToAction("ThemNhanVien", "Admin");
                 }
                 db.NhanViens.Add(nhanvien);
                 db.SaveChanges();
@@ -567,5 +605,166 @@ namespace BTL.Areas.Admin.Controllers
         //Xoa dichvu end!
         //them sua xoa dich vu end!
 
+
+        //Hóa Đơn
+        [Route("HoaDon")]
+        public IActionResult HoaDon(int? page)
+        {
+            int pageSize = 6;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lsthoadon = db.HoaDons.AsNoTracking();
+            PagedList<HoaDon> lst = new PagedList<HoaDon>(lsthoadon, pageNumber, pageSize);
+            return View(lst);
+        }
+
+        //Sửa hóa đơn
+        [Route("SuaHoaDon")]
+        [HttpGet]
+        public IActionResult SuaHoaDon(string mahd)
+        {
+            ViewBag.MaNv = new SelectList(db.NhanViens.ToList(), "MaNv", "MaNv");
+            ViewBag.MaKh = new SelectList(db.KhachHangs.ToList(), "MaKh", "MaKh");
+            var hoadon = db.HoaDons.Find(mahd);
+            return View(hoadon);
+        }
+
+        [Route("SuaHoaDon")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaHoaDon(HoaDon hoadon)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Update(hoadon);
+                db.SaveChanges();
+                return RedirectToAction("HoaDon", "HomeAdmin");
+            }
+            return View(hoadon);
+        }
+
+        //Xóa hóa đơn
+
+
+        [Route("XoaHoaDon")]
+        [HttpGet]
+        public IActionResult XoaHoaDon(string mahd)
+        {
+            TempData["Message"] = "";
+            var chitietdatphong = db.DatPhongs.Where(x => x.SoHoaDon == mahd).ToList();
+            if (chitietdatphong.Count() > 0)
+            {
+                TempData["Message"] = "Không xóa được hóa đơn này";
+                return RedirectToAction("HoaDon", "Admin");
+            }
+            var hoadon = db.HoaDons.Where(x => x.SoHoaDon == mahd);
+            if (hoadon.Any()) db.RemoveRange(hoadon);
+            db.Remove(db.HoaDons.Find(mahd));
+            db.SaveChanges();
+            TempData["Message"] = "Hóa đơn này đã được xóa";
+            return RedirectToAction("HoaDon", "Admin");
+        }
+
+        // Khách Hàng
+        [Route("KhachHang")]
+        public IActionResult KhachHang(int? page)
+        {
+            int pageSize = 6;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstkhachhang = db.KhachHangs.AsNoTracking().OrderBy(x =>x.MaKh);
+            PagedList<KhachHang> lst = new PagedList<KhachHang>(lstkhachhang, pageNumber, pageSize);
+            return View(lst);
+        }
+
+        //Sửa khách hàng
+        [Route("SuaKhachHang")]
+        [HttpGet]
+        public IActionResult SuaKhachHang(string makh)
+        {
+            var khachhang = db.KhachHangs.Find(makh);
+            return View(khachhang);
+        }
+
+        [Route("SuaKhachHang")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaKhachHang(KhachHang khachhang)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Update(khachhang);
+                db.SaveChanges();
+                return RedirectToAction("KhachHang", "Admin");
+            }
+            return View(khachhang);
+        }
+
+        //Xóa khách hàng
+
+        [Route("XoaKhachHang")]
+        [HttpGet]
+        public IActionResult XoaKhachHang(string makh)
+        {
+            TempData["Message"] = "";
+            var chitiethoadon = db.HoaDons.Where(x => x.MaKh == makh);
+                if (chitiethoadon.Count() >0)
+                {
+                    TempData["Message"] = "Không xóa được khách hàng này";
+                    return RedirectToAction("KhachHang", "Admin");
+                }
+            var khachhang = db.KhachHangs.Where(x => x.MaKh == makh);
+            if (khachhang.Any()) db.RemoveRange(khachhang);
+            db.Remove(db.KhachHangs.Find(makh));
+            db.SaveChanges();
+            TempData["Message"] = "Thông tin khách hàng đã được xóa";
+            return RedirectToAction("KhachHang", "Admin");
+        }
+
+        // Đặt phòng
+        [Route("ThongTinDatPhong")]
+        public IActionResult ThongTinDatPhong(int? page)
+        {
+            int pageSize = 6;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstdatphong = db.DatPhongs.AsNoTracking().OrderBy(x => x.MaPhong);
+            PagedList<DatPhong> lst = new PagedList<DatPhong>(lstdatphong, pageNumber, pageSize);
+            return View(lst);
+        }
+
+        //Sửa phòng
+
+        [Route("SuaTTDatPhong")]
+        [HttpGet]
+        public IActionResult SuaTTDatPhong(string maphong, string sohd)
+        {
+            var datphong = db.DatPhongs.FirstOrDefault(x => x.MaPhong == maphong && x.SoHoaDon == sohd);
+            return View(datphong);
+        }
+
+        [Route("SuaTTDatPhong")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SuaTTDatPhong(DatPhong datphong)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Update(datphong);
+                db.SaveChanges();
+                return RedirectToAction("ThongTinDatPhong", "Admin");
+            }
+            return View(datphong);
+        }
+
+        // Xóa thông tin đặt phòng
+        [Route("XoaTTDatPhong")]
+        [HttpGet]
+        public IActionResult XoaTTDatPhong(string maphong, string sohd)
+        {
+            TempData["Message"] = "";
+            string sql = "Delete from DatPhong where MaPhong = {0} and SoHoaDon = {1}";
+            db.Database.ExecuteSqlRaw(sql,maphong,sohd);
+            db.SaveChanges();
+            TempData["Message"] = "Phòng đặt đã được xóa đã được xóa";
+            return RedirectToAction("ThongTinDatPhong", "Admin");
+        }
     }
 }
