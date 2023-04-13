@@ -1,0 +1,66 @@
+﻿<div class="wrap">
+	<div class="container">
+		<div class="row">
+			<div id="availability">
+
+				<form action="Room/GetForm" method="post">
+					<div class="a-col">
+						<section>
+							@await Component.InvokeAsync("SelectRoom")
+						</section>
+					</div>
+					<div class="a-col alternate">
+						<div class="input-field">
+							<label for="date-start">Check In</label>
+							<input type="date" name="NgayDen" id="NgayDen" />
+						</div>
+					</div>
+					<div class="a-col alternate">
+						<div class="input-field">
+							<label for="date-end">Check Out</label>
+							<input type="date" name="NgayDi" id="NgayDi" />
+						</div>
+					</div>
+					<div class="a-col" style="font-family: Arial,serif; background-color: #3C4146">
+						<input onclick="return kiemtra();" type="submit" value="Check Availability"
+							   style="width: 100%; color:white; border-style: hidden;
+									background-color: #3C4146;" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	function kiemtra() {
+		var ngayden = document.getElementById("NgayDen").value;
+		var ngaydi = document.getElementById("NgayDi").value;
+		if (ngayden == "") {
+			alert("Chưa nhập Check in");
+			return false;
+		}
+
+		var inpDate = new Date(ngayden);
+
+		var today = new Date();
+
+		if (inpDate.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0)) {
+			alert("Check in phải nhỏ hơn hoặc bằng ngày hôm nay");
+			return false;
+		}
+
+		if (ngaydi == "") {
+			alert("Chưa nhập Check out");
+			return false;
+		}
+
+		if (ngayden >= ngaydi) {
+			alert("Check in phải nhỏ hơn Check out");
+			return false;
+		}
+		
+		return true;
+	}
+</script>
+
