@@ -16,6 +16,22 @@
 						<li><a asp-controller="Home" asp-action="Service">Services</a></li>
 						<li><a asp-controller="Home" asp-action="Blog">Blog</a></li>
 						<li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+						<li>
+							@if (TempData["name"] != null)
+							{
+									<a class="fh5co-sub-ddown">
+										Xin chào, @TempData["name"]
+									</a>
+									<ul class="fh5co-sub-menu">
+										<li><a asp-action="ThongTinCaNhan" asp-controller="KhachHang">Thông tin cá nhân</a></li>
+										<li><a asp-action="DangXuat" asp-controller="Access">Logout</a></li>
+									</ul>
+							}
+							else
+							{
+									<a asp-action="DangNhap" asp-controller="Access">Login</a>
+							}
+						</li>
 					</ul>
 				</nav>
 			</div>
