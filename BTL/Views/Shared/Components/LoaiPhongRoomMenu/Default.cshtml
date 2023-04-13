@@ -1,0 +1,38 @@
+﻿@model IEnumerable<LoaiPhong>
+
+@foreach (var item in Model)
+{
+    var getUrl = "https://localhost:7186/api/roomapi/" + item.MaLp;
+    <li><a style="cursor:pointer" onclick="showAllRoomByCatagory('@getUrl')">@item.LoaiPhong1</a></li>
+}
+<script>
+    function showAllRoomByCatagory(getUrl) {
+        var str = ''
+        $.ajax({
+            type: 'GET',
+            url: getUrl,
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, val) {
+                    str += `<div class="col-md-4" >
+                                <div class="hotel-content" >
+                                        <div class="hotel-grid" style = "background-image: url(../images/${val.anh});" >
+                                        <div class="price" > <small>For as low as </small> <span>${val.gia}/night</span></div >
+                                            <a class="book-now text-center" href = "#" > <i class="ti-calendar" > </i> Book Now</a>
+                                                </div>
+                                                <div class="desc" >
+                                                                    <h3><a href="/Room/ChiTietPhong?maphong=${val.maPhong}&amp;maloai=${val.maLp}">${val.tenPhong}</a></h3 >
+                                                        <p>${val.tinhTrang}</p>
+                                                        </div>
+                                                        </div>
+                                                        </div>`;
+                    //str += '<p>' + val.tenPhong + '</p>'
+                });
+                $('#displayRoom').html(str);
+            },
+            Error: function (xhr) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+</script>

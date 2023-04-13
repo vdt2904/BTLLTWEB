@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "PhongTheoLoai";
+    Layout = "~/Views/Shared/_LayoutRoom.cshtml";
+}
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Phong>
+
+@foreach (var item in Model)
+{
+	@await Html.PartialAsync("_PartialRoom", item);
+}
+
+<div class="feature-full-1col">
+	@Html.PagedListPager(Model, page => Url.Action("PhongTheoLoai", new {page=page, maloai = ViewBag.maloai}), new X.PagedList.Web.Common.PagedListRenderOptions(){
+	LiElementClasses = new List<String> {"page-item"},
+	PageClasses = new List<String> {"page-link"}
+	})
+</div>
+

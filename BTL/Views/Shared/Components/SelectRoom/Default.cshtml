@@ -1,0 +1,11 @@
+﻿@model IEnumerable<LoaiPhong>
+
+<select name="MaLp" class="cs-select cs-skin-border">
+	<option value="all" selected ="selected">All Room</option>
+	@foreach (var item in Model)
+	{
+		var tmp = item.MaLp;
+		<option value="@tmp" >@item.LoaiPhong1</option>
+	}
+</select>
+

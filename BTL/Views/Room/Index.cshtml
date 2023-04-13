@@ -1,14 +1,15 @@
-﻿@{
-	ViewData["Title"] = "Home Page";
-	Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutRoom.cshtml";
 }
+
 @using X.PagedList.Mvc.Core;
 @model X.PagedList.IPagedList<LoaiPhong>
 
 @foreach (var item in Model)
 {
-	@await Html.PartialAsync("_PartialLoaiPhong", item)
-	;
+	@await Html.PartialAsync("_PartialLoaiPhong", item);
 }
 
 <div class="feature-full-1col">

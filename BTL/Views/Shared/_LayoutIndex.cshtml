@@ -71,7 +71,7 @@
 <body>
 	<div id="fh5co-wrapper">
 		<div id="fh5co-page">
-			@await Html.PartialAsync("_PartialHeader")
+			@await Html.PartialAsync("_PartialHomeHeader")
 			<!-- end:fh5co-header -->
 			<aside id="fh5co-hero" class="js-fullheight">
 				<div class="flexslider js-fullheight">
@@ -85,7 +85,7 @@
 											<p><span>Bora Hotel</span></p>
 											<h2>Reserve Room for Family Vacation</h2>
 											<p>
-												<a href="#" class="btn btn-primary btn-lg">Book Now</a>
+												<a asp-controller="Room" asp-action="Index" class="btn btn-primary btn-lg">Book Now</a>
 											</p>
 										</div>
 									</div>
@@ -101,7 +101,7 @@
 											<p><span>Deluxe Hotel</span></p>
 											<h2>Make Your Vacation Comfortable</h2>
 											<p>
-												<a href="#" class="btn btn-primary btn-lg">Book Now</a>
+												<a asp-controller="Room" asp-action="Index" class="btn btn-primary btn-lg">Book Now</a>
 											</p>
 										</div>
 									</div>
@@ -117,57 +117,18 @@
 											<p><span>Luxe Hotel</span></p>
 											<h2>A Best Place To Enjoy Your Life</h2>
 											<p>
-												<a href="#" class="btn btn-primary btn-lg">Book Now</a>
+												<a asp-controller="Room" asp-action="Index" class="btn btn-primary btn-lg">Book Now</a>
 											</p>
 										</div>
 									</div>
 								</div>
 							</div>
 						</li>
-
 					</ul>
 				</div>
 			</aside>
-			<div class="wrap">
-				<div class="container">
-					<div class="row">
-						<div id="availability">
-							<form action="#">
-
-								<div class="a-col">
-									<section>
-										<select class="cs-select cs-skin-border">
-											<option value="" disabled selected>Select Room</option>
-											<option value="email">Luxe Hotel</option>
-											<option value="twitter">Deluxe Hotel</option>
-											<option value="linkedin">Five Star Hotel</option>
-										</select>
-									</section>
-								</div>
-								<div class="a-col alternate">
-									<div class="input-field">
-										<label for="date-start">Check In</label>
-										<input type="text" class="form-control" id="date-start" />
-									</div>
-								</div>
-								<div class="a-col alternate">
-									<div class="input-field">
-										<label for="date-end">Check Out</label>
-										<input type="text" class="form-control" id="date-end" />
-									</div>
-								</div>
-								<div class="a-col action">
-									<a href="#">
-										<span>Check</span>
-										Availability
-									</a>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-
+			@await Html.PartialAsync("_PartialGetRoom")
+			
 			<div id="fh5co-counter-section" class="fh5co-counters">
 				<div class="container">
 					<div class="row">
@@ -219,122 +180,120 @@
 
 					<div id="tabs">
 						<nav class="tabs-nav">
-
 							@await Component.InvokeAsync("MenuDichVu")
 						</nav>
+
 						<div id="displaydichvu" class="tab-content-container">
+							<div class="tab-content active show" data-tab-content="tab1">
+								<div class="container">
+									<div class="row">
+										<div class="col-md-6">
+											<img src="../images/AnhDichVu/Dichvu01.jpg" class="col-5 col-md-5" alt="Image">
+										</div>
+										<div class="col-md-6">
+											<span class="super-heading-sm">World Class</span>
+											<h3 class="heading">Bể bơi</h3>
 
-							<div class="container">
-								<div class="row">
-									<div class="col-md-6">
-										<img src="../images/AnhDichVu/Dichvu01.jpg" class="col-5 col-md-5" alt="Image">
-									</div>
-									<div class="col-md-6">
-										<span class="super-heading-sm">World Class</span>
-										<h3 class="heading">Bể bơi</h3>
+											<p class="service-hour">
+												<span>Service Hours</span>
+												<strong>7:30 AM - 8:00 PM</strong>
+											</p>
 
-										<p class="service-hour">
-											<span>Service Hours</span>
-											<strong>7:30 AM - 8:00 PM</strong>
-										</p>
-
+										</div>
 									</div>
 								</div>
 							</div>
+							
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+			<div id="testimonial">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="section-title text-center">
+								<h2>Happy Customer Says...</h2>
+							</div>
 						</div>
 					</div>
-
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-
-	<div id="testimonial">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="section-title text-center">
-						<h2>Happy Customer Says...</h2>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">
-					<div class="testimony">
-						<blockquote>
-							&ldquo;If you’re looking for a top quality hotel look no further. We were upgraded free of charge to the Premium Suite, thanks so much&rdquo;
-						</blockquote>
-						<p class="author"><cite>John Doe</cite></p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="testimony">
-						<blockquote>
-							&ldquo;Me and my wife had a delightful weekend get away here, the staff were so friendly and attentive. Highly Recommended&rdquo;
-						</blockquote>
-						<p class="author"><cite>Rob Smith</cite></p>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="testimony">
-						<blockquote>
-							&ldquo;If you’re looking for a top quality hotel look no further. We were upgraded free of charge to the Premium Suite, thanks so much&rdquo;
-						</blockquote>
-						<p class="author"><cite>Jane Doe</cite></p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="fh5co-blog-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="section-title text-center">
-						<h2>Our Blog</h2>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-4">
-					<div class="blog-grid" style="background-image: url(../1Layout/images/image-1.jpg);">
-						<div class="date text-center">
-							<span>09</span>
-							<small>Aug</small>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="testimony">
+								<blockquote>
+									&ldquo;If you’re looking for a top quality hotel look no further. We were upgraded free of charge to the Premium Suite, thanks so much&rdquo;
+								</blockquote>
+								<p class="author"><cite>John Doe</cite></p>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="testimony">
+								<blockquote>
+									&ldquo;Me and my wife had a delightful weekend get away here, the staff were so friendly and attentive. Highly Recommended&rdquo;
+								</blockquote>
+								<p class="author"><cite>Rob Smith</cite></p>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="testimony">
+								<blockquote>
+									&ldquo;If you’re looking for a top quality hotel look no further. We were upgraded free of charge to the Premium Suite, thanks so much&rdquo;
+								</blockquote>
+								<p class="author"><cite>Jane Doe</cite></p>
+							</div>
 						</div>
 					</div>
-					<div class="desc">
-						<h3><a href="#">Most Expensive Hotel</a></h3>
-					</div>
 				</div>
-				<div class="col-md-4">
-					<div class="blog-grid" style="background-image: url(../1Layout/images/image-2.jpg);">
-						<div class="date text-center">
-							<span>09</span>
-							<small>Aug</small>
+			</div>
+			<div id="fh5co-blog-section">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="section-title text-center">
+								<h2>Our Blog</h2>
+							</div>
 						</div>
 					</div>
-					<div class="desc">
-						<h3><a href="#">1st Anniversary of Luxe Hotel</a></h3>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="blog-grid" style="background-image: url(../1Layout/images/image-3.jpg);">
-						<div class="date text-center">
-							<span>09</span>
-							<small>Aug</small>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="blog-grid" style="background-image: url(../1Layout/images/image-1.jpg);">
+								<div class="date text-center">
+									<span>09</span>
+									<small>Aug</small>
+								</div>
+							</div>
+							<div class="desc">
+								<h3><a href="#">Most Expensive Hotel</a></h3>
+							</div>
 						</div>
-					</div>
-					<div class="desc">
-						<h3><a href="#">Discover New Adventure</a></h3>
+						<div class="col-md-4">
+							<div class="blog-grid" style="background-image: url(../1Layout/images/image-2.jpg);">
+								<div class="date text-center">
+									<span>09</span>
+									<small>Aug</small>
+								</div>
+							</div>
+							<div class="desc">
+								<h3><a href="#">1st Anniversary of Luxe Hotel</a></h3>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="blog-grid" style="background-image: url(../1Layout/images/image-3.jpg);">
+								<div class="date text-center">
+									<span>09</span>
+									<small>Aug</small>
+								</div>
+							</div>
+							<div class="desc">
+								<h3><a href="#">Discover New Adventure</a></h3>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 
 
 	@await Html.PartialAsync("_PartialFooter")
