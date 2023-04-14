@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Plugins;
+using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -98,6 +99,27 @@ namespace BTL.Controllers
                 return RedirectToAction("DangNhap", "Access");
             }
             return View();
+        }
+        [HttpGet]
+        public IActionResult KhachHang()
+        {
+            string a = HttpContext.Session.GetString("Usernamekh");
+            var lg = db.LoginKhs.FirstOrDefault(x => x.Username == a);
+            string b = lg.MaKh;
+            var kh = db.KhachHangs.Find(b);
+
+            return View(kh);
+        }
+        [HttpPost]
+        public IActionResult KhachHang(KhachHang kh)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Update(kh);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View(kh);
         }
         public string maHdTd(string a)
         {

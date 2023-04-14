@@ -1,0 +1,49 @@
+﻿@model BTL.Models.DatPhong
+
+@{
+    ViewData["Title"] = "datphong";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+
+<h2>datphong</h2>
+
+<h4>DatPhong</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="datphong">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaPhong" class="control-label"></label>
+                <select asp-for="MaPhong" class ="form-control" asp-items="ViewBag.MaPhong"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoHoaDon" class="control-label"></label>
+                <select asp-for="SoHoaDon" class ="form-control" asp-items="ViewBag.SoHoaDon"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayDen" class="control-label"></label>
+                <input asp-for="NgayDen" class="form-control" />
+                <span asp-validation-for="NgayDen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayDi" class="control-label"></label>
+                <input asp-for="NgayDi" class="form-control" />
+                <span asp-validation-for="NgayDi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoNguoi" class="control-label"></label>
+                <input asp-for="SoNguoi" class="form-control" />
+                <span asp-validation-for="SoNguoi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
