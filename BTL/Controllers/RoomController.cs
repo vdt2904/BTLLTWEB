@@ -53,11 +53,13 @@ namespace BTL.Controllers
 
         public IActionResult ChiTietPhong(string maphong, string maloai)
         {
+            HttpContext.Session.SetString("maphong1", maphong);
             var Lphong = db.LoaiPhongs.SingleOrDefault(x => x.MaLp == maloai);
 
             var phong = db.Phongs.Where(x => x.MaPhong == maphong && x.MaLp == maloai).FirstOrDefault();
 
             ViewBag.TenPhong = phong.TenPhong;
+            ViewBag.vote = phong.Slvote;
 
             ViewBag.TinhTrang = phong.TinhTrang;
 
@@ -237,6 +239,15 @@ namespace BTL.Controllers
             string soHDString = soHD.ToString().PadLeft(match.Value.Length, '0');
             string maHDMoi = maHD.Substring(0, match.Index) + soHDString;
             return maHDMoi;
+        }
+
+        public IActionResult Booking()
+        {
+            string sql = "delete hoadon where sohoadon not in (select sohoadon from datphong)";
+
+            db.Database.ExecuteSqlRaw(sql);
+            db.SaveChanges();
+            return RedirectToAction("Datphong", "datphong");
         }
     }
 }

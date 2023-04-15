@@ -182,6 +182,7 @@ public partial class QlkhachSanAspContext : DbContext
             entity.Property(e => e.TenKh)
                 .HasMaxLength(50)
                 .HasColumnName("TenKH");
+            entity.Property(e => e.Vote).HasColumnName("vote");
         });
 
         modelBuilder.Entity<LoaiPhong>(entity =>
@@ -271,6 +272,7 @@ public partial class QlkhachSanAspContext : DbContext
             entity.Property(e => e.MaLp)
                 .HasMaxLength(10)
                 .HasColumnName("MaLP");
+            entity.Property(e => e.Slvote).HasColumnName("SLVote");
             entity.Property(e => e.TenPhong).HasMaxLength(50);
             entity.Property(e => e.TinhTrang).HasMaxLength(50);
 

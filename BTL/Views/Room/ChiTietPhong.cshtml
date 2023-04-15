@@ -27,17 +27,17 @@
                 <div class="product__details__text">
                     <h3>@Model.LoaiPhong1</h3>
                     <div class="product__details__rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                        <span>(18 reviews)</span>
+                        @for(int vote=0;vote< ViewBag.vote; vote++)
+                        { 
+                          <i class="fa fa-star"></i>
+                      }
+                       
+                        <span>(@ViewBag.vote  reviews)</span>
                     </div>
                     <h4 style="margin-bottom: 10px">@ViewBag.TenPhong</h4>
                     <div class="product__details__price">@Model.Gia/night</div>
 
-                    <a href="#" class="primary-btn">Booking</a>
+                    <a asp-controller="room" asp-action="datphong" methood="get" class="primary-btn">Booking</a> @* boook *@
 
                     <ul>
                         <li><b>Tình Trạng</b> <span>@ViewBag.TinhTrang</span></li>
