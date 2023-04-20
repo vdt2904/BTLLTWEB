@@ -26,7 +26,7 @@
                 }
                 <canvas class="my-3 h-20" id="bar"></canvas>
                 <div>
-                    <label>Tổng tiền: <span>@Model.TongTien</span></label>
+                    <label id="tongtien"></label>
                 </div>
             </div>
         </div>
@@ -45,8 +45,8 @@
                     </div>
                 }
                 <canvas class="my-3 h-20" id="bardt"></canvas>
-                <div>
-                    <label>Tổng tiền: <span>@Model.DoanhThu</span></label>
+                <div>   
+                    <label id="doanhthu"> </label>
                 </div>
             </div>
         </div>
@@ -54,50 +54,126 @@
 </div>
 
 
-<script type="text/javascript">
-    var ctx = document.getElementById('bar');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: @Html.Raw(Json.Serialize(Model.Csvcs.Select(x => x.Labels))),
-            datasets: [{
-                label: 'Tổng tiền',
-                data: @Html.Raw(Json.Serialize(Model.Csvcs.Select(x => x.Data))),
-                backgroundColor: 'rgba(6,128,250)'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
+<script>
+    $(document).ready(function () {
+        renderTongtien();
+        renderDoanhthu();
+        scriptChartDoanhthu();
+        scriptChartThongke();
     });
-</script>
-<script type="text/javascript">
-    var ctx = document.getElementById('bardt');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: @Html.Raw(Json.Serialize(Model.TDoanhThus.Select(x => x.Labels))),
-            datasets: [{
-                label: 'Tổng tiền',
-                data: @Html.Raw(Json.Serialize(Model.TDoanhThus.Select(x => x.Data))),
-                backgroundColor: 'rgba(6,128,250)'
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
+    function renderTongtien(){
+        var str = ''
+        $.ajax({
+            url: `https://localhost:7186/api/apithongke/thongke`,
+            method: 'GET',
+            contentType: 'json',
+            dataType: 'json',
+            error: function (response) {
+                console.log("error");
+            },
+            success: function (response) {
+                str += `<span>Tổng tiền: ` + response.tongTien + `</span>`
+                document.getElementById('tongtien').innerHTML = str;
+            },
+        });
+    };
+    function renderDoanhthu() {
+        var str = ''
+        $.ajax({
+            url: `https://localhost:7186/api/apithongke/thongke`,
+            method: 'GET',
+            contentType: 'json',
+            dataType: 'json',
+            error: function (response) {
+                console.log("error");
+            },
+            success: function (response) {
+                str += `<span>Tổng tiền: ` + response.doanhThu + `</span>`
+                document.getElementById('doanhthu').innerHTML = str;
+            },
+        });
+    };
+    function scriptChartThongke() {
+        var str = '';
+        $.ajax({
+            url: `https://localhost:7186/api/apithongke/thongke`,
+            method: 'GET',
+            contentType: 'json',
+            dataType: 'json',
+            error: function (response) {
+                console.log("error");
+            },
+            success: function (response) {
+                var labels = response.csvcs.map(function (item) {
+                    return item.Labels;
+                });
+                var data = response.csvcs.map(function (item) {
+                    return item.Data;
+                });
+                var ctx = document.getElementById('bar');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Tổng tiền',
+                            data: data,
+                            backgroundColor: 'rgba(6,128,250)'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
                     }
-                }]
-            }
-        }
-    });
+                });
+            },
+        });
+    }
+    function scriptChartDoanhthu() {
+        var str = '';
+        $.ajax({
+            url: `https://localhost:7186/api/apithongke/thongke`,
+            method: 'GET',
+            contentType: 'json',
+            dataType: 'json',
+            error: function (response) {
+                console.log("error");
+            },
+            success: function (response) {
+                var labels = response.tDoanhThus.map(function (item) {
+                    return item.Labels;
+                });
+                var data = response.tDoanhThus.map(function (item) {
+                    return item.Data;
+                });
+                var ctx = document.getElementById('bardt');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Tổng tiền',
+                            data: data,
+                            backgroundColor: 'rgba(6,128,250)'
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            },
+        });
+    }
 </script>
 

@@ -28,29 +28,13 @@ namespace BTL.Areas.Admin.Controllers
 		{
             //csvc
             DateTime date = DateTime.Now;   
-
-            var viewModel = new MyViewModel();
-
-            //csvc
+            
             ViewBag.Years = new SelectList(db.Csvcs.Select(x => x.Nam).Distinct().OrderByDescending(x => x).ToList(), date.Year);
-            viewModel.Csvcs = db.Csvcs
-                .Where(x => x.Nam == date.Year)
-                .OrderBy(x => x.Thang)
-                .Select(x => new BarChartViewModel { Labels = new List<string> { "Tháng: " + x.Thang.ToString() }, Data = new List<double?> { x.TongTien } })
-                .ToList();
-            double totalMoney = db.Csvcs.Where(x => x.Nam == date.Year).Sum(x => x.TongTien) ?? 0;
-            viewModel.TongTien = totalMoney.ToString("N0");
+            
             //doanhthu
             ViewBag.Yearss = new SelectList(db.TDoanhThus.Select(x => x.Nam).Distinct().OrderByDescending(x => x).ToList(), date.Year);
-            viewModel.TDoanhThus = db.TDoanhThus
-                .Where(x => x.Nam == date.Year)
-                .OrderBy(x => x.Thang)
-                .Select(x => new BarChartViewModel { Labels = new List<string> { "Tháng: " + x.Thang.ToString() }, Data = new List<double?> { x.TongTien } })
-                .ToList();
-            double totalDT = db.TDoanhThus.Where(x => x.Nam == date.Year).Sum(x => x.TongTien) ?? 0;
-            viewModel.DoanhThu = totalDT.ToString("N0");
-
-            return View(viewModel);
+            
+            return View();
 
         }
         [Route("Index")]
@@ -91,13 +75,10 @@ namespace BTL.Areas.Admin.Controllers
         //them sua xoa phong begin!
         //hien thi phong begin!
         [Route("phongks")]
-		public IActionResult PhongKS(int? page)
+		public IActionResult PhongKS()
 		{
-			int pageSize = 15;
-			int pageNumber = page == null || page < 0 ? 1 : page.Value;
-			var lstphong = db.Phongs.AsNoTracking().OrderBy(x => x.TenPhong);
-			PagedList<Phong> lst = new PagedList<Phong>(lstphong, pageNumber, pageSize);
-			return View(lst);
+
+			return View();
 		}
         //hien thi phong end!
         //them phong begin!
